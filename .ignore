@@ -1,0 +1,6 @@
+### IntelliJ stuff
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea_modules/
