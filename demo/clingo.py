@@ -1,7 +1,27 @@
-import gringo
-import sys
+from gringo import Control, Model, Fun
 
-ctl = gringo.Control()
+import sys
+import pprint
+
+def on_model(model):
+    solution = model.atoms()
+    positions = []
+    for atom in model.atoms(Model.ATOMS):
+        print atom
+
+ctl = Control()
+
 ctl.load("program.lp")
 ctl.ground([("base", [])])
-ctl.solve(on_model=lambda m: sys.stdout.write(str(m) + "\n"))
+with ctl.solve_iter() as it:
+    for m in it: print m
+
+# ctl.solve([], on_model)
+
+#ctl.solve(on_model=lambda m: sys.stdout.write(str(m) + "\n"))
+
+#with ctl.solve_iter() as it:
+#    for m in it: print m
+
+
+

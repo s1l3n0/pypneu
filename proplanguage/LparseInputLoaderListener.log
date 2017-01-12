@@ -1,0 +1,24 @@
+INFO:root:captured pos literal: b
+INFO:root:captured literal: b
+INFO:root:captured head formula: {'operator': 1, 'inputTerms': [b]}
+INFO:root:captured pos literal: a
+INFO:root:captured literal: a
+INFO:root:captured ext literal: a
+INFO:root:captured pos literal: b
+INFO:root:captured literal: b
+INFO:root:captured ext literal: b
+INFO:root:captured (ext literal list) formula list: [<proplanguage.Formula instance at 0x7fed059b14d0>]
+INFO:root:captured (ext literal list) formula list: [<proplanguage.Formula instance at 0x7fed059b15a8>, <proplanguage.Formula instance at 0x7fed059b14d0>]
+INFO:root:captured body formula: {'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}, {'operator': 1, 'inputTerms': [b]}]}
+INFO:root:captured normal rule: {'operator': 1, 'inputTerms': [b]}:-{'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}, {'operator': 1, 'inputTerms': [b]}]}
+INFO:root:captured asp rule: {'body': {'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}, {'operator': 1, 'inputTerms': [b]}]}, 'head': {'operator': 1, 'inputTerms': [b]}}
+INFO:root:captured pos literal: c
+INFO:root:captured literal: c
+INFO:root:captured head formula: {'operator': 1, 'inputTerms': [c]}
+INFO:root:captured pos literal: a
+INFO:root:captured literal: a
+INFO:root:captured ext literal: a
+INFO:root:captured (ext literal list) formula list: [<proplanguage.Formula instance at 0x7fed059b1908>]
+INFO:root:captured body formula: {'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}]}
+INFO:root:captured normal rule: {'operator': 1, 'inputTerms': [c]}:-{'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}]}
+INFO:root:captured asp rule: {'body': {'operator': 4, 'inputFormulas': [{'operator': 1, 'inputTerms': [a]}]}, 'head': {'operator': 1, 'inputTerms': [c]}}

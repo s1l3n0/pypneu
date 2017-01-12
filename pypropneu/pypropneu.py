@@ -22,7 +22,7 @@ class Node:
 class Token:
     # Fields:
     # label : String
-    def __init__(self, label):
+    def __init__(self, label=None):
         self.label = label
 
 class ArcType:

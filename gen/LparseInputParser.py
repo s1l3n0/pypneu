@@ -1,4 +1,4 @@
-# Generated from C:/Users/Giovanni/PycharmProjects/pylppn/grammars\LparseInput.g4 by ANTLR 4.6
+# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/LparseInput.g4 by ANTLR 4.6
 # encoding: utf-8
 from __future__ import print_function
 from antlr4 import *

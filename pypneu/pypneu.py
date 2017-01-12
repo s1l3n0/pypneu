@@ -19,13 +19,6 @@ class Node:
         self.inputs = []
         self.outputs = []
 
-class Token:
-    # Fields:
-    # id
-    # label
-    def __init__(self):
-        self.label = ""
-
 class ArcType:
     NORMAL = 1
     INHIBITOR = 2
@@ -58,15 +51,13 @@ class Place(Node):
 
     def Flush(self):
         logging.info("Flushing " + self.name)
-        self.marking = []
+        self.marking = 0
 
 class TransitionEvent():
     # Fields:
     # transition
-    # token
-    def __init__(self, transition, token):
+    def __init__(self, transition):
         self.transition = transition
-        self.token = token
 
 class Transition(Node):
     # Fields:
@@ -84,11 +75,11 @@ class Transition(Node):
 
         for input in self.inputs:
             if input.type == ArcType.NORMAL:
-                if len(input.source.marking) < input.weight:
+                if input.source.marking < input.weight:
                     logging.info("not sufficient tokens in place " + input.source.name + ": disabled.")
                     return False
             elif input.type == ArcType.INHIBITOR:
-                if len(input.source.marking) >= input.weight:
+                if input.source.marking >= input.weight:
                     logging.info("threshold number of tokens reached in place " + input.source.name + ": inhibited.")
                     return False
         return True
@@ -102,22 +93,19 @@ class Transition(Node):
     def ConsumeInputTokens(self):
         for input in self.inputs:
             if input.type == ArcType.NORMAL:
-                logging.info("consuming " + str(input.weight) + " tokens in place " + input.target.name)
-                for i in range (0, input.weight):
-                    input.source.marking.pop()
+                logging.info("consuming " + str(input.weight) + " tokens in place " + input.source.name)
+                input.source.marking -= input.weight
             else:
                 raise ValueError("Unexpected type of input arc")
 
     def ProduceOutputTokens(self):
-        token = Token()
         events = []
         for output in self.outputs:
             if output.type == ArcType.NORMAL:
                 logging.info("producing " + str(output.weight) + " tokens in place " + output.target.name)
                 for i in range (0, output.weight):
-                    clonedToken = copy.deepcopy(token)
-                    event = TransitionEvent(self, token)
-                    output.target.marking.append(clonedToken)
+                    event = TransitionEvent(self)
+                    output.target.marking += 1
                     events.append(event)
             elif output.type == ArcType.RESET:
                 logging.info("resetting place " + output.target.name)
@@ -140,7 +128,7 @@ class PetriNetStructure:
     def PrintMarking(self):
         output = ""
         for place in self.places:
-            output = output + place.name + ": " + str(len(place.marking)) + ", "
+            output = output + place.name + ": " + str(place.marking) + ", "
         print output[:-2]
 
 class PetriNet(PetriNetStructure):
@@ -183,8 +171,8 @@ class PetriNet(PetriNetStructure):
 # really simple Petri net
 # two places, a transition
 
-p1 = Place("p1", "p1", [Token(), Token(), Token()])
-p2 = Place("p2", "p2", [])
+p1 = Place("p1", "p1", 3)
+p2 = Place("p2", "p2", 0)
 t1 = Transition("t1", "t1")
 a1 = Arc("a1", p1, t1, ArcType.NORMAL, 1)
 a2 = Arc("a2", t1, p2, ArcType.NORMAL, 1)

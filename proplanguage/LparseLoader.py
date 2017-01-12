@@ -1,10 +1,12 @@
-import pprint
 import antlr4
-from proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
-from LparseInputLexer import LparseInputLexer
-from LparseInputListener import LparseInputListener
-from LparseInputParser import LparseInputParser
+import logging
 
+from proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
+from gen.LparseInputLexer import LparseInputLexer
+from gen.LparseInputListener import LparseInputListener
+from gen.LparseInputParser import LparseInputParser
+
+logging.basicConfig(filename='LparseInputLoaderListener.log', filemode='w', level=logging.INFO)
 
 class LparseInputLoaderListener(LparseInputListener):
 
@@ -13,64 +15,72 @@ class LparseInputLoaderListener(LparseInputListener):
         self.ruleList = []
 
     def exitPos_literal(self, ctx):
-        if (ctx.predicate().IDENTIFIER()):
-            self.decorations[ctx] = Atom(name = ctx.predicate().IDENTIFIER().getText())
+        if ctx.predicate().IDENTIFIER():
+            atom = Atom(name=ctx.predicate().IDENTIFIER().getText())
+            self.decorations[ctx] = atom
+            logging.info("captured pos literal: " + str(atom))
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
     def exitLiteral(self, ctx):
         atom = self.decorations[ctx.pos_literal()]
-        self.decorations[ctx] = Literal(
-            atom = atom,
-            neg = (ctx.MINUS())
+        literal = Literal(
+            atom=atom,
+            neg=(ctx.MINUS())
         )
+        self.decorations[ctx] = literal
+        logging.info("captured literal: " + str(literal))
 
     def exitExt_literal(self, ctx):
         literal = self.decorations[ctx.literal()]
-        self.decorations[ctx] = ExtLiteral(
-            literal = literal,
+        extliteral = ExtLiteral(
+            literal=literal,
             naf=(ctx.NOT())
         )
+        self.decorations[ctx] = extliteral
+        logging.info("captured ext literal: " + str(extliteral))
 
     def exitList_literals(self, ctx):
-        literalList = []
+        literal_list = []
 
-        if (ctx.literal()):
+        if ctx.literal():
             # for generality, we store ExtLiterals in the list, rather than Literals
             literal = ExtLiteral(
-                literal = self.decorations[ctx.literal()],
-                naf = False
+                literal=self.decorations[ctx.literal()],
+                naf=False
             )
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
-        literalList.append(literal)
+        literal_list.append(literal)
 
-        if (ctx.list_literals()):
-            literalList = literalList + self.decorations[ctx.list_literals()]
+        if ctx.list_literals():
+            literal_list = literal_list + self.decorations[ctx.list_literals()]
 
-        self.decorations[ctx] = literalList
+        self.decorations[ctx] = literal_list
+        logging.info("captured (ext) literal list: " + str(literal_list))
 
     def exitList_ext_literals_expressions(self, ctx):
-        formulaList = []
+        formula_list = []
 
-        if (ctx.ext_literal()):
-            extLiteral = self.decorations[ctx.ext_literal()]
+        if ctx.ext_literal():
+            ext_literal = self.decorations[ctx.ext_literal()]
             formula = Formula(
                 operator=Operator.POS,
-                inputTerms=(extLiteral)
+                inputTerms=[ext_literal]
             )
-            formulaList.append(formula)
+            formula_list.append(formula)
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
-        if (ctx.list_ext_literals_expressions()):
-            formulaList = formulaList + self.decorations[ctx.list_ext_literals_expressions()]
+        if ctx.list_ext_literals_expressions():
+            formula_list = formula_list + self.decorations[ctx.list_ext_literals_expressions()]
 
-        self.decorations[ctx] = formulaList
+        self.decorations[ctx] = formula_list
+        logging.info("captured (ext literal list) formula list: " + str(formula_list))
 
     def exitChoice(self, ctx):
-        literalList = self.decorations[ctx.list_literals]
+        literal_list = self.decorations[ctx.list_literals]
         if not ctx.minchoice:
             l = ctx.minchoice.getText()
         else:
@@ -79,11 +89,11 @@ class LparseInputLoaderListener(LparseInputListener):
         if not ctx.maxchoice:
             r = ctx.maxchoice.getText()
         else:
-            r = len(literalList)
+            r = len(literal_list)
 
-        if l == len(literalList) and l == r:
+        if l == len(literal_list) and l == r:
             operator = Operator.AND
-        elif l == 1 and r == len(literalList):
+        elif l == 1 and r == len(literal_list):
             operator = Operator.OR
         elif l == 1 and r == 1:
             operator = Operator.XOR
@@ -91,16 +101,19 @@ class LparseInputLoaderListener(LparseInputListener):
             operator = Operator.CHOICE
 
         formula = Formula(
-            operator = operator,
-            inputTerms = literalList        # should be ExtLiterals !!!
+            operator=operator,
+            inputTerms=literal_list        # should be ExtLiterals !!!
         )
+
+        self.decorations[ctx] = formula
+        logging.info("captured choice formula: " + str(formula))
 
     def exitHead(self, ctx):
         if ctx.literal():
             literal = self.decorations[ctx.literal()]
             formula = Formula(
-                operator = Operator.POS,
-                inputTerms = (literal)
+                operator=Operator.POS,
+                inputTerms=[literal]
             )
         elif ctx.choice():
             formula = self.decorations[ctx.choice()]
@@ -108,13 +121,14 @@ class LparseInputLoaderListener(LparseInputListener):
             raise ValueError("Unexpected element in " + ctx.getText())
 
         self.decorations[ctx] = formula
+        logging.info("captured head formula: " + str(formula))
 
     def exitBody(self, ctx):
         if ctx.list_ext_literals_expressions():
-            formulaList = self.decorations[ctx.list_ext_literals_expressions()]
+            formula_list = self.decorations[ctx.list_ext_literals_expressions()]
             formula = Formula(
-                operator = Operator.AND,
-                inputFormulas = formulaList
+                operator=Operator.AND,
+                inputFormulas=formula_list
             )
         elif ctx.choice():
             formula = self.decorations[ctx.choice()]
@@ -122,6 +136,7 @@ class LparseInputLoaderListener(LparseInputListener):
             raise ValueError("Unexpected element in " + ctx.getText())
 
         self.decorations[ctx] = formula
+        logging.info("captured body formula: " + str(formula))
 
     def exitConstraint(self, ctx):
         if ctx.body():
@@ -129,9 +144,10 @@ class LparseInputLoaderListener(LparseInputListener):
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
-        rule = Rule(body = body)
+        rule = Rule(body=body)
 
         self.decorations[ctx] = rule
+        logging.info("captured constraint: :- " + str(rule))
         self.ruleList.append(rule)
 
     def exitNormrule(self, ctx):
@@ -145,6 +161,7 @@ class LparseInputLoaderListener(LparseInputListener):
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
+        logging.info("captured normal rule: " + str(head) + ":-" + str(body))
         self.decorations[ctx] = Rule(head = head, body = body)
 
     def exitAsprule(self, ctx):
@@ -155,6 +172,7 @@ class LparseInputLoaderListener(LparseInputListener):
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
+        logging.info("captured asp rule: " + str(rule))
         self.decorations[ctx] = rule
         self.ruleList.append(rule)
 
@@ -166,6 +184,7 @@ class LparseInputLoaderListener(LparseInputListener):
 
         rule = Rule(head = head)
 
+        logging.info("captured asp fact: " + str(rule))
         self.decorations[ctx] = rule
         self.ruleList.append(rule)
 
@@ -183,7 +202,7 @@ def parse(inputstream):
     return loader.ruleList
 
 if __name__ == '__main__':
-    ruleList = parseString("b :- a. c :- a.")
+    ruleList = parseString("b :- a, b. c :- a.")
     for rule in ruleList:
         print str(rule)
 
