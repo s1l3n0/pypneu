@@ -4,7 +4,7 @@ from proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
 from LparseInputLexer import LparseInputLexer
 from LparseInputListener import LparseInputListener
 from LparseInputParser import LparseInputParser
-import sys
+
 
 class LparseInputLoaderListener(LparseInputListener):
 
@@ -21,15 +21,14 @@ class LparseInputLoaderListener(LparseInputListener):
     def exitLiteral(self, ctx):
         atom = self.decorations[ctx.pos_literal()]
         self.decorations[ctx] = Literal(
-            name = atom.name,
+            atom = atom,
             neg = (ctx.MINUS())
         )
 
     def exitExt_literal(self, ctx):
         literal = self.decorations[ctx.literal()]
         self.decorations[ctx] = ExtLiteral(
-            name=literal.name,
-            neg=literal.neg,
+            literal = literal,
             naf=(ctx.NOT())
         )
 
@@ -37,7 +36,11 @@ class LparseInputLoaderListener(LparseInputListener):
         literalList = []
 
         if (ctx.literal()):
-            literal = self.decorations[ctx.literal()]
+            # for generality, we store ExtLiterals in the list, rather than Literals
+            literal = ExtLiteral(
+                literal = self.decorations[ctx.literal()],
+                naf = False
+            )
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
@@ -166,15 +169,22 @@ class LparseInputLoaderListener(LparseInputListener):
         self.decorations[ctx] = rule
         self.ruleList.append(rule)
 
+def parseString(code):
+    return parse(antlr4.InputStream(code))
 
-def main():
-    lexer = LparseInputLexer(antlr4.InputStream("a :- b, c."))
+def parse(inputstream):
+    lexer = LparseInputLexer(inputstream)
     stream = antlr4.CommonTokenStream(lexer)
     parser = LparseInputParser(stream)
     tree = parser.program()
     loader = LparseInputLoaderListener()
     walker = antlr4.ParseTreeWalker()
     walker.walk(loader, tree)
+    return loader.ruleList
 
 if __name__ == '__main__':
-    main()
+    ruleList = parseString("b :- a. c :- a.")
+    for rule in ruleList:
+        print str(rule)
+
+
