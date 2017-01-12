@@ -7,7 +7,7 @@ class Atom:
         self.name = name
 
     def __str__(self):
-        return str(self.__dict__)
+        return self.name
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

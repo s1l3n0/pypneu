@@ -1,10 +1,9 @@
-import pprint
 import antlr4
-from proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
-from LparseInputLexer import LparseInputLexer
-from LparseInputListener import LparseInputListener
-from LparseInputParser import LparseInputParser
-import sys
+
+from pypropneu.LparseInputLexer import LparseInputLexer
+from pypropneu.LparseInputListener import LparseInputListener
+from pypropneu.LparseInputParser import LparseInputParser
+from proplanguage.proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
 
 class LparseInputLoaderListener(LparseInputListener):
 
