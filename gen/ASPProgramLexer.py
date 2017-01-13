@@ -1,4 +1,4 @@
-# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/LparseInput.g4 by ANTLR 4.6
+# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/ASPProgram.g4 by ANTLR 4.6
 # encoding: utf-8
 from __future__ import print_function
 from antlr4 import *
@@ -83,7 +83,7 @@ def serializedATN():
         return buf.getvalue()
 
 
-class LparseInputLexer(Lexer):
+class ASPProgramLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -137,10 +137,10 @@ class LparseInputLexer(Lexer):
                   u"DOMAIN", u"RANGELEX", u"INTEGER", u"IDENTIFIER", u"VARIABLE", 
                   u"SINGLE_LINE_COMMENT", u"MULTILINE_COMMENT" ]
 
-    grammarFileName = u"LparseInput.g4"
+    grammarFileName = u"ASPProgram.g4"
 
     def __init__(self, input=None):
-        super(LparseInputLexer, self).__init__(input)
+        super(ASPProgramLexer, self).__init__(input)
         self.checkVersion("4.6")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None

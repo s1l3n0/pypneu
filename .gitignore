@@ -5,3 +5,9 @@
 *.iws
 .idea/
 .idea_modules/
+
+### python stuff
+*.pyc
+
+### local stuff
+tmp/

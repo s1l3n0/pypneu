@@ -1,4 +1,4 @@
-# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/LparseInput.g4 by ANTLR 4.6
+# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/ASPProgram.g4 by ANTLR 4.6
 # encoding: utf-8
 from __future__ import print_function
 from antlr4 import *
@@ -83,9 +83,9 @@ def serializedATN():
         return buf.getvalue()
 
 
-class LparseInputParser ( Parser ):
+class ASPProgramParser ( Parser ):
 
-    grammarFileName = "LparseInput.g4"
+    grammarFileName = "ASPProgram.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -165,7 +165,7 @@ class LparseInputParser ( Parser ):
     MULTILINE_COMMENT=27
 
     def __init__(self, input):
-        super(LparseInputParser, self).__init__(input)
+        super(ASPProgramParser, self).__init__(input)
         self.checkVersion("4.6")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
@@ -175,35 +175,35 @@ class LparseInputParser ( Parser ):
     class ProgramContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.ProgramContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.ProgramContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def EOF(self):
-            return self.getToken(LparseInputParser.EOF, 0)
+            return self.getToken(ASPProgramParser.EOF, 0)
 
         def directive(self, i=None):
             if i is None:
-                return self.getTypedRuleContexts(LparseInputParser.DirectiveContext)
+                return self.getTypedRuleContexts(ASPProgramParser.DirectiveContext)
             else:
-                return self.getTypedRuleContext(LparseInputParser.DirectiveContext,i)
+                return self.getTypedRuleContext(ASPProgramParser.DirectiveContext,i)
 
 
         def aspfact(self, i=None):
             if i is None:
-                return self.getTypedRuleContexts(LparseInputParser.AspfactContext)
+                return self.getTypedRuleContexts(ASPProgramParser.AspfactContext)
             else:
-                return self.getTypedRuleContext(LparseInputParser.AspfactContext,i)
+                return self.getTypedRuleContext(ASPProgramParser.AspfactContext,i)
 
 
         def asprule(self, i=None):
             if i is None:
-                return self.getTypedRuleContexts(LparseInputParser.AspruleContext)
+                return self.getTypedRuleContexts(ASPProgramParser.AspruleContext)
             else:
-                return self.getTypedRuleContext(LparseInputParser.AspruleContext,i)
+                return self.getTypedRuleContext(ASPProgramParser.AspruleContext,i)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_program
+            return ASPProgramParser.RULE_program
 
         def enterRule(self, listener):
             if hasattr(listener, "enterProgram"):
@@ -218,7 +218,7 @@ class LparseInputParser ( Parser ):
 
     def program(self):
 
-        localctx = LparseInputParser.ProgramContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.ProgramContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_program)
         self._la = 0 # Token type
         try:
@@ -226,7 +226,7 @@ class LparseInputParser ( Parser ):
             self.state = 49
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LparseInputParser.T__0) | (1 << LparseInputParser.T__1) | (1 << LparseInputParser.ENTAILS) | (1 << LparseInputParser.LACC) | (1 << LparseInputParser.MINUS) | (1 << LparseInputParser.DOMAIN) | (1 << LparseInputParser.INTEGER) | (1 << LparseInputParser.IDENTIFIER))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << ASPProgramParser.T__0) | (1 << ASPProgramParser.T__1) | (1 << ASPProgramParser.ENTAILS) | (1 << ASPProgramParser.LACC) | (1 << ASPProgramParser.MINUS) | (1 << ASPProgramParser.DOMAIN) | (1 << ASPProgramParser.INTEGER) | (1 << ASPProgramParser.IDENTIFIER))) != 0):
                 self.state = 47
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,0,self._ctx)
@@ -251,7 +251,7 @@ class LparseInputParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 52
-            self.match(LparseInputParser.EOF)
+            self.match(ASPProgramParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -263,21 +263,21 @@ class LparseInputParser ( Parser ):
     class DirectiveContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.DirectiveContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.DirectiveContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def DOMAIN(self):
-            return self.getToken(LparseInputParser.DOMAIN, 0)
+            return self.getToken(ASPProgramParser.DOMAIN, 0)
 
         def list_literals(self):
-            return self.getTypedRuleContext(LparseInputParser.List_literalsContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_literalsContext,0)
 
 
         def DOT(self):
-            return self.getToken(LparseInputParser.DOT, 0)
+            return self.getToken(ASPProgramParser.DOT, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_directive
+            return ASPProgramParser.RULE_directive
 
         def enterRule(self, listener):
             if hasattr(listener, "enterDirective"):
@@ -292,27 +292,27 @@ class LparseInputParser ( Parser ):
 
     def directive(self):
 
-        localctx = LparseInputParser.DirectiveContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.DirectiveContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_directive)
         self._la = 0 # Token type
         try:
             self.state = 63
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [LparseInputParser.DOMAIN]:
+            if token in [ASPProgramParser.DOMAIN]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 54
-                self.match(LparseInputParser.DOMAIN)
+                self.match(ASPProgramParser.DOMAIN)
                 self.state = 55
                 self.list_literals()
                 self.state = 56
-                self.match(LparseInputParser.DOT)
+                self.match(ASPProgramParser.DOT)
                 pass
-            elif token in [LparseInputParser.T__0, LparseInputParser.T__1]:
+            elif token in [ASPProgramParser.T__0, ASPProgramParser.T__1]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 58
                 _la = self._input.LA(1)
-                if not(_la==LparseInputParser.T__0 or _la==LparseInputParser.T__1):
+                if not(_la==ASPProgramParser.T__0 or _la==ASPProgramParser.T__1):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -320,13 +320,13 @@ class LparseInputParser ( Parser ):
                 self.state = 60
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==LparseInputParser.MINUS or _la==LparseInputParser.IDENTIFIER:
+                if _la==ASPProgramParser.MINUS or _la==ASPProgramParser.IDENTIFIER:
                     self.state = 59
                     self.list_literals()
 
 
                 self.state = 62
-                self.match(LparseInputParser.DOT)
+                self.match(ASPProgramParser.DOT)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -342,19 +342,19 @@ class LparseInputParser ( Parser ):
     class AspruleContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.AspruleContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.AspruleContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def normrule(self):
-            return self.getTypedRuleContext(LparseInputParser.NormruleContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.NormruleContext,0)
 
 
         def constraint(self):
-            return self.getTypedRuleContext(LparseInputParser.ConstraintContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.ConstraintContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_asprule
+            return ASPProgramParser.RULE_asprule
 
         def enterRule(self, listener):
             if hasattr(listener, "enterAsprule"):
@@ -369,18 +369,18 @@ class LparseInputParser ( Parser ):
 
     def asprule(self):
 
-        localctx = LparseInputParser.AspruleContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.AspruleContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_asprule)
         try:
             self.state = 67
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [LparseInputParser.LACC, LparseInputParser.MINUS, LparseInputParser.INTEGER, LparseInputParser.IDENTIFIER]:
+            if token in [ASPProgramParser.LACC, ASPProgramParser.MINUS, ASPProgramParser.INTEGER, ASPProgramParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 65
                 self.normrule()
                 pass
-            elif token in [LparseInputParser.ENTAILS]:
+            elif token in [ASPProgramParser.ENTAILS]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 66
                 self.constraint()
@@ -399,22 +399,22 @@ class LparseInputParser ( Parser ):
     class AspfactContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.AspfactContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.AspfactContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def DOT(self):
-            return self.getToken(LparseInputParser.DOT, 0)
+            return self.getToken(ASPProgramParser.DOT, 0)
 
         def head(self):
-            return self.getTypedRuleContext(LparseInputParser.HeadContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.HeadContext,0)
 
 
         def rangedef(self):
-            return self.getTypedRuleContext(LparseInputParser.RangedefContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.RangedefContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_aspfact
+            return ASPProgramParser.RULE_aspfact
 
         def enterRule(self, listener):
             if hasattr(listener, "enterAspfact"):
@@ -429,7 +429,7 @@ class LparseInputParser ( Parser ):
 
     def aspfact(self):
 
-        localctx = LparseInputParser.AspfactContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.AspfactContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_aspfact)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -448,7 +448,7 @@ class LparseInputParser ( Parser ):
 
 
             self.state = 73
-            self.match(LparseInputParser.DOT)
+            self.match(ASPProgramParser.DOT)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -460,32 +460,32 @@ class LparseInputParser ( Parser ):
     class RangedefContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.RangedefContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.RangedefContext, self).__init__(parent, invokingState)
             self.parser = parser
             self.rangemin = None # Token
             self.rangemax = None # Token
 
         def identifier(self):
-            return self.getTypedRuleContext(LparseInputParser.IdentifierContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.IdentifierContext,0)
 
 
         def LPAR(self):
-            return self.getToken(LparseInputParser.LPAR, 0)
+            return self.getToken(ASPProgramParser.LPAR, 0)
 
         def RANGELEX(self):
-            return self.getToken(LparseInputParser.RANGELEX, 0)
+            return self.getToken(ASPProgramParser.RANGELEX, 0)
 
         def RPAR(self):
-            return self.getToken(LparseInputParser.RPAR, 0)
+            return self.getToken(ASPProgramParser.RPAR, 0)
 
         def INTEGER(self, i=None):
             if i is None:
-                return self.getTokens(LparseInputParser.INTEGER)
+                return self.getTokens(ASPProgramParser.INTEGER)
             else:
-                return self.getToken(LparseInputParser.INTEGER, i)
+                return self.getToken(ASPProgramParser.INTEGER, i)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_rangedef
+            return ASPProgramParser.RULE_rangedef
 
         def enterRule(self, listener):
             if hasattr(listener, "enterRangedef"):
@@ -500,22 +500,22 @@ class LparseInputParser ( Parser ):
 
     def rangedef(self):
 
-        localctx = LparseInputParser.RangedefContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.RangedefContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_rangedef)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 75
             self.identifier()
             self.state = 76
-            self.match(LparseInputParser.LPAR)
+            self.match(ASPProgramParser.LPAR)
             self.state = 77
-            localctx.rangemin = self.match(LparseInputParser.INTEGER)
+            localctx.rangemin = self.match(ASPProgramParser.INTEGER)
             self.state = 78
-            self.match(LparseInputParser.RANGELEX)
+            self.match(ASPProgramParser.RANGELEX)
             self.state = 79
-            localctx.rangemax = self.match(LparseInputParser.INTEGER)
+            localctx.rangemax = self.match(ASPProgramParser.INTEGER)
             self.state = 80
-            self.match(LparseInputParser.RPAR)
+            self.match(ASPProgramParser.RPAR)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -527,25 +527,25 @@ class LparseInputParser ( Parser ):
     class NormruleContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.NormruleContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.NormruleContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def head(self):
-            return self.getTypedRuleContext(LparseInputParser.HeadContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.HeadContext,0)
 
 
         def ENTAILS(self):
-            return self.getToken(LparseInputParser.ENTAILS, 0)
+            return self.getToken(ASPProgramParser.ENTAILS, 0)
 
         def body(self):
-            return self.getTypedRuleContext(LparseInputParser.BodyContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.BodyContext,0)
 
 
         def DOT(self):
-            return self.getToken(LparseInputParser.DOT, 0)
+            return self.getToken(ASPProgramParser.DOT, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_normrule
+            return ASPProgramParser.RULE_normrule
 
         def enterRule(self, listener):
             if hasattr(listener, "enterNormrule"):
@@ -560,18 +560,18 @@ class LparseInputParser ( Parser ):
 
     def normrule(self):
 
-        localctx = LparseInputParser.NormruleContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.NormruleContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_normrule)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 82
             self.head()
             self.state = 83
-            self.match(LparseInputParser.ENTAILS)
+            self.match(ASPProgramParser.ENTAILS)
             self.state = 84
             self.body()
             self.state = 85
-            self.match(LparseInputParser.DOT)
+            self.match(ASPProgramParser.DOT)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -583,21 +583,21 @@ class LparseInputParser ( Parser ):
     class ConstraintContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.ConstraintContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.ConstraintContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def ENTAILS(self):
-            return self.getToken(LparseInputParser.ENTAILS, 0)
+            return self.getToken(ASPProgramParser.ENTAILS, 0)
 
         def body(self):
-            return self.getTypedRuleContext(LparseInputParser.BodyContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.BodyContext,0)
 
 
         def DOT(self):
-            return self.getToken(LparseInputParser.DOT, 0)
+            return self.getToken(ASPProgramParser.DOT, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_constraint
+            return ASPProgramParser.RULE_constraint
 
         def enterRule(self, listener):
             if hasattr(listener, "enterConstraint"):
@@ -612,16 +612,16 @@ class LparseInputParser ( Parser ):
 
     def constraint(self):
 
-        localctx = LparseInputParser.ConstraintContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.ConstraintContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_constraint)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 87
-            self.match(LparseInputParser.ENTAILS)
+            self.match(ASPProgramParser.ENTAILS)
             self.state = 88
             self.body()
             self.state = 89
-            self.match(LparseInputParser.DOT)
+            self.match(ASPProgramParser.DOT)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -633,29 +633,29 @@ class LparseInputParser ( Parser ):
     class ChoiceContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.ChoiceContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.ChoiceContext, self).__init__(parent, invokingState)
             self.parser = parser
             self.choicemin = None # Token
             self.choicemax = None # Token
 
         def LACC(self):
-            return self.getToken(LparseInputParser.LACC, 0)
+            return self.getToken(ASPProgramParser.LACC, 0)
 
         def list_literals(self):
-            return self.getTypedRuleContext(LparseInputParser.List_literalsContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_literalsContext,0)
 
 
         def RACC(self):
-            return self.getToken(LparseInputParser.RACC, 0)
+            return self.getToken(ASPProgramParser.RACC, 0)
 
         def INTEGER(self, i=None):
             if i is None:
-                return self.getTokens(LparseInputParser.INTEGER)
+                return self.getTokens(ASPProgramParser.INTEGER)
             else:
-                return self.getToken(LparseInputParser.INTEGER, i)
+                return self.getToken(ASPProgramParser.INTEGER, i)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_choice
+            return ASPProgramParser.RULE_choice
 
         def enterRule(self, listener):
             if hasattr(listener, "enterChoice"):
@@ -670,7 +670,7 @@ class LparseInputParser ( Parser ):
 
     def choice(self):
 
-        localctx = LparseInputParser.ChoiceContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.ChoiceContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_choice)
         self._la = 0 # Token type
         try:
@@ -678,23 +678,23 @@ class LparseInputParser ( Parser ):
             self.state = 92
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.INTEGER:
+            if _la==ASPProgramParser.INTEGER:
                 self.state = 91
-                localctx.choicemin = self.match(LparseInputParser.INTEGER)
+                localctx.choicemin = self.match(ASPProgramParser.INTEGER)
 
 
             self.state = 94
-            self.match(LparseInputParser.LACC)
+            self.match(ASPProgramParser.LACC)
             self.state = 95
             self.list_literals()
             self.state = 96
-            self.match(LparseInputParser.RACC)
+            self.match(ASPProgramParser.RACC)
             self.state = 98
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.INTEGER:
+            if _la==ASPProgramParser.INTEGER:
                 self.state = 97
-                localctx.choicemax = self.match(LparseInputParser.INTEGER)
+                localctx.choicemax = self.match(ASPProgramParser.INTEGER)
 
 
         except RecognitionException as re:
@@ -708,19 +708,19 @@ class LparseInputParser ( Parser ):
     class HeadContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.HeadContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.HeadContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
-            return self.getTypedRuleContext(LparseInputParser.LiteralContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.LiteralContext,0)
 
 
         def choice(self):
-            return self.getTypedRuleContext(LparseInputParser.ChoiceContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.ChoiceContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_head
+            return ASPProgramParser.RULE_head
 
         def enterRule(self, listener):
             if hasattr(listener, "enterHead"):
@@ -735,18 +735,18 @@ class LparseInputParser ( Parser ):
 
     def head(self):
 
-        localctx = LparseInputParser.HeadContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.HeadContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_head)
         try:
             self.state = 102
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [LparseInputParser.MINUS, LparseInputParser.IDENTIFIER]:
+            if token in [ASPProgramParser.MINUS, ASPProgramParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 100
                 self.literal()
                 pass
-            elif token in [LparseInputParser.LACC, LparseInputParser.INTEGER]:
+            elif token in [ASPProgramParser.LACC, ASPProgramParser.INTEGER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 101
                 self.choice()
@@ -765,19 +765,19 @@ class LparseInputParser ( Parser ):
     class BodyContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.BodyContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.BodyContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def list_ext_literals_expressions(self):
-            return self.getTypedRuleContext(LparseInputParser.List_ext_literals_expressionsContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_ext_literals_expressionsContext,0)
 
 
         def choice(self):
-            return self.getTypedRuleContext(LparseInputParser.ChoiceContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.ChoiceContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_body
+            return ASPProgramParser.RULE_body
 
         def enterRule(self, listener):
             if hasattr(listener, "enterBody"):
@@ -792,7 +792,7 @@ class LparseInputParser ( Parser ):
 
     def body(self):
 
-        localctx = LparseInputParser.BodyContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.BodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_body)
         try:
             self.state = 106
@@ -822,22 +822,22 @@ class LparseInputParser ( Parser ):
     class List_literalsContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.List_literalsContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.List_literalsContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
-            return self.getTypedRuleContext(LparseInputParser.LiteralContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.LiteralContext,0)
 
 
         def COMMA(self):
-            return self.getToken(LparseInputParser.COMMA, 0)
+            return self.getToken(ASPProgramParser.COMMA, 0)
 
         def list_literals(self):
-            return self.getTypedRuleContext(LparseInputParser.List_literalsContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_literalsContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_list_literals
+            return ASPProgramParser.RULE_list_literals
 
         def enterRule(self, listener):
             if hasattr(listener, "enterList_literals"):
@@ -852,7 +852,7 @@ class LparseInputParser ( Parser ):
 
     def list_literals(self):
 
-        localctx = LparseInputParser.List_literalsContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.List_literalsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_list_literals)
         self._la = 0 # Token type
         try:
@@ -862,9 +862,9 @@ class LparseInputParser ( Parser ):
             self.state = 111
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.COMMA:
+            if _la==ASPProgramParser.COMMA:
                 self.state = 109
-                self.match(LparseInputParser.COMMA)
+                self.match(ASPProgramParser.COMMA)
                 self.state = 110
                 self.list_literals()
 
@@ -880,26 +880,26 @@ class LparseInputParser ( Parser ):
     class List_ext_literals_expressionsContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.List_ext_literals_expressionsContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.List_ext_literals_expressionsContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def ext_literal(self):
-            return self.getTypedRuleContext(LparseInputParser.Ext_literalContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.Ext_literalContext,0)
 
 
         def expression(self):
-            return self.getTypedRuleContext(LparseInputParser.ExpressionContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.ExpressionContext,0)
 
 
         def COMMA(self):
-            return self.getToken(LparseInputParser.COMMA, 0)
+            return self.getToken(ASPProgramParser.COMMA, 0)
 
         def list_ext_literals_expressions(self):
-            return self.getTypedRuleContext(LparseInputParser.List_ext_literals_expressionsContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_ext_literals_expressionsContext,0)
 
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_list_ext_literals_expressions
+            return ASPProgramParser.RULE_list_ext_literals_expressions
 
         def enterRule(self, listener):
             if hasattr(listener, "enterList_ext_literals_expressions"):
@@ -914,7 +914,7 @@ class LparseInputParser ( Parser ):
 
     def list_ext_literals_expressions(self):
 
-        localctx = LparseInputParser.List_ext_literals_expressionsContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.List_ext_literals_expressionsContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_list_ext_literals_expressions)
         self._la = 0 # Token type
         try:
@@ -936,9 +936,9 @@ class LparseInputParser ( Parser ):
             self.state = 119
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.COMMA:
+            if _la==ASPProgramParser.COMMA:
                 self.state = 117
-                self.match(LparseInputParser.COMMA)
+                self.match(ASPProgramParser.COMMA)
                 self.state = 118
                 self.list_ext_literals_expressions()
 
@@ -954,56 +954,56 @@ class LparseInputParser ( Parser ):
     class ExpressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.ExpressionContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.ExpressionContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def EQ(self):
-            return self.getToken(LparseInputParser.EQ, 0)
+            return self.getToken(ASPProgramParser.EQ, 0)
 
         def NEQ(self):
-            return self.getToken(LparseInputParser.NEQ, 0)
+            return self.getToken(ASPProgramParser.NEQ, 0)
 
         def LT(self):
-            return self.getToken(LparseInputParser.LT, 0)
+            return self.getToken(ASPProgramParser.LT, 0)
 
         def LE(self):
-            return self.getToken(LparseInputParser.LE, 0)
+            return self.getToken(ASPProgramParser.LE, 0)
 
         def GT(self):
-            return self.getToken(LparseInputParser.GT, 0)
+            return self.getToken(ASPProgramParser.GT, 0)
 
         def GE(self):
-            return self.getToken(LparseInputParser.GE, 0)
+            return self.getToken(ASPProgramParser.GE, 0)
 
         def identifier(self):
-            return self.getTypedRuleContext(LparseInputParser.IdentifierContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.IdentifierContext,0)
 
 
         def variable(self):
-            return self.getTypedRuleContext(LparseInputParser.VariableContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.VariableContext,0)
 
 
         def INTEGER(self, i=None):
             if i is None:
-                return self.getTokens(LparseInputParser.INTEGER)
+                return self.getTokens(ASPProgramParser.INTEGER)
             else:
-                return self.getToken(LparseInputParser.INTEGER, i)
+                return self.getToken(ASPProgramParser.INTEGER, i)
 
         def num_expression(self, i=None):
             if i is None:
-                return self.getTypedRuleContexts(LparseInputParser.Num_expressionContext)
+                return self.getTypedRuleContexts(ASPProgramParser.Num_expressionContext)
             else:
-                return self.getTypedRuleContext(LparseInputParser.Num_expressionContext,i)
+                return self.getTypedRuleContext(ASPProgramParser.Num_expressionContext,i)
 
 
         def IDENTIFIER(self):
-            return self.getToken(LparseInputParser.IDENTIFIER, 0)
+            return self.getToken(ASPProgramParser.IDENTIFIER, 0)
 
         def VARIABLE(self):
-            return self.getToken(LparseInputParser.VARIABLE, 0)
+            return self.getToken(ASPProgramParser.VARIABLE, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_expression
+            return ASPProgramParser.RULE_expression
 
         def enterRule(self, listener):
             if hasattr(listener, "enterExpression"):
@@ -1018,7 +1018,7 @@ class LparseInputParser ( Parser ):
 
     def expression(self):
 
-        localctx = LparseInputParser.ExpressionContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.ExpressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_expression)
         self._la = 0 # Token type
         try:
@@ -1038,7 +1038,7 @@ class LparseInputParser ( Parser ):
 
             elif la_ == 3:
                 self.state = 123
-                self.match(LparseInputParser.INTEGER)
+                self.match(ASPProgramParser.INTEGER)
                 pass
 
             elif la_ == 4:
@@ -1049,7 +1049,7 @@ class LparseInputParser ( Parser ):
 
             self.state = 127
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << LparseInputParser.EQ) | (1 << LparseInputParser.NEQ) | (1 << LparseInputParser.GT) | (1 << LparseInputParser.LT) | (1 << LparseInputParser.GE) | (1 << LparseInputParser.LE))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << ASPProgramParser.EQ) | (1 << ASPProgramParser.NEQ) | (1 << ASPProgramParser.GT) | (1 << ASPProgramParser.LT) | (1 << ASPProgramParser.GE) | (1 << ASPProgramParser.LE))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1059,17 +1059,17 @@ class LparseInputParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
             if la_ == 1:
                 self.state = 128
-                self.match(LparseInputParser.IDENTIFIER)
+                self.match(ASPProgramParser.IDENTIFIER)
                 pass
 
             elif la_ == 2:
                 self.state = 129
-                self.match(LparseInputParser.VARIABLE)
+                self.match(ASPProgramParser.VARIABLE)
                 pass
 
             elif la_ == 3:
                 self.state = 130
-                self.match(LparseInputParser.INTEGER)
+                self.match(ASPProgramParser.INTEGER)
                 pass
 
             elif la_ == 4:
@@ -1089,30 +1089,30 @@ class LparseInputParser ( Parser ):
     class Num_expressionContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.Num_expressionContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.Num_expressionContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def PLUS(self):
-            return self.getToken(LparseInputParser.PLUS, 0)
+            return self.getToken(ASPProgramParser.PLUS, 0)
 
         def MINUS(self):
-            return self.getToken(LparseInputParser.MINUS, 0)
+            return self.getToken(ASPProgramParser.MINUS, 0)
 
         def variable(self, i=None):
             if i is None:
-                return self.getTypedRuleContexts(LparseInputParser.VariableContext)
+                return self.getTypedRuleContexts(ASPProgramParser.VariableContext)
             else:
-                return self.getTypedRuleContext(LparseInputParser.VariableContext,i)
+                return self.getTypedRuleContext(ASPProgramParser.VariableContext,i)
 
 
         def INTEGER(self, i=None):
             if i is None:
-                return self.getTokens(LparseInputParser.INTEGER)
+                return self.getTokens(ASPProgramParser.INTEGER)
             else:
-                return self.getToken(LparseInputParser.INTEGER, i)
+                return self.getToken(ASPProgramParser.INTEGER, i)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_num_expression
+            return ASPProgramParser.RULE_num_expression
 
         def enterRule(self, listener):
             if hasattr(listener, "enterNum_expression"):
@@ -1127,7 +1127,7 @@ class LparseInputParser ( Parser ):
 
     def num_expression(self):
 
-        localctx = LparseInputParser.Num_expressionContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.Num_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_num_expression)
         self._la = 0 # Token type
         try:
@@ -1135,20 +1135,20 @@ class LparseInputParser ( Parser ):
             self.state = 136
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [LparseInputParser.VARIABLE]:
+            if token in [ASPProgramParser.VARIABLE]:
                 self.state = 134
                 self.variable()
                 pass
-            elif token in [LparseInputParser.INTEGER]:
+            elif token in [ASPProgramParser.INTEGER]:
                 self.state = 135
-                self.match(LparseInputParser.INTEGER)
+                self.match(ASPProgramParser.INTEGER)
                 pass
             else:
                 raise NoViableAltException(self)
 
             self.state = 138
             _la = self._input.LA(1)
-            if not(_la==LparseInputParser.PLUS or _la==LparseInputParser.MINUS):
+            if not(_la==ASPProgramParser.PLUS or _la==ASPProgramParser.MINUS):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -1156,13 +1156,13 @@ class LparseInputParser ( Parser ):
             self.state = 141
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [LparseInputParser.VARIABLE]:
+            if token in [ASPProgramParser.VARIABLE]:
                 self.state = 139
                 self.variable()
                 pass
-            elif token in [LparseInputParser.INTEGER]:
+            elif token in [ASPProgramParser.INTEGER]:
                 self.state = 140
-                self.match(LparseInputParser.INTEGER)
+                self.match(ASPProgramParser.INTEGER)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -1178,18 +1178,18 @@ class LparseInputParser ( Parser ):
     class Ext_literalContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.Ext_literalContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.Ext_literalContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
-            return self.getTypedRuleContext(LparseInputParser.LiteralContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.LiteralContext,0)
 
 
         def NOT(self):
-            return self.getToken(LparseInputParser.NOT, 0)
+            return self.getToken(ASPProgramParser.NOT, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_ext_literal
+            return ASPProgramParser.RULE_ext_literal
 
         def enterRule(self, listener):
             if hasattr(listener, "enterExt_literal"):
@@ -1204,7 +1204,7 @@ class LparseInputParser ( Parser ):
 
     def ext_literal(self):
 
-        localctx = LparseInputParser.Ext_literalContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.Ext_literalContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_ext_literal)
         self._la = 0 # Token type
         try:
@@ -1212,9 +1212,9 @@ class LparseInputParser ( Parser ):
             self.state = 144
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.NOT:
+            if _la==ASPProgramParser.NOT:
                 self.state = 143
-                self.match(LparseInputParser.NOT)
+                self.match(ASPProgramParser.NOT)
 
 
             self.state = 146
@@ -1230,18 +1230,18 @@ class LparseInputParser ( Parser ):
     class LiteralContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.LiteralContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.LiteralContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def pos_literal(self):
-            return self.getTypedRuleContext(LparseInputParser.Pos_literalContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.Pos_literalContext,0)
 
 
         def MINUS(self):
-            return self.getToken(LparseInputParser.MINUS, 0)
+            return self.getToken(ASPProgramParser.MINUS, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_literal
+            return ASPProgramParser.RULE_literal
 
         def enterRule(self, listener):
             if hasattr(listener, "enterLiteral"):
@@ -1256,7 +1256,7 @@ class LparseInputParser ( Parser ):
 
     def literal(self):
 
-        localctx = LparseInputParser.LiteralContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.LiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 30, self.RULE_literal)
         self._la = 0 # Token type
         try:
@@ -1264,9 +1264,9 @@ class LparseInputParser ( Parser ):
             self.state = 149
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.MINUS:
+            if _la==ASPProgramParser.MINUS:
                 self.state = 148
-                self.match(LparseInputParser.MINUS)
+                self.match(ASPProgramParser.MINUS)
 
 
             self.state = 151
@@ -1282,25 +1282,25 @@ class LparseInputParser ( Parser ):
     class Pos_literalContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.Pos_literalContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.Pos_literalContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def predicate(self):
-            return self.getTypedRuleContext(LparseInputParser.PredicateContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.PredicateContext,0)
 
 
         def LPAR(self):
-            return self.getToken(LparseInputParser.LPAR, 0)
+            return self.getToken(ASPProgramParser.LPAR, 0)
 
         def list_parameters(self):
-            return self.getTypedRuleContext(LparseInputParser.List_parametersContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_parametersContext,0)
 
 
         def RPAR(self):
-            return self.getToken(LparseInputParser.RPAR, 0)
+            return self.getToken(ASPProgramParser.RPAR, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_pos_literal
+            return ASPProgramParser.RULE_pos_literal
 
         def enterRule(self, listener):
             if hasattr(listener, "enterPos_literal"):
@@ -1315,7 +1315,7 @@ class LparseInputParser ( Parser ):
 
     def pos_literal(self):
 
-        localctx = LparseInputParser.Pos_literalContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.Pos_literalContext(self, self._ctx, self.state)
         self.enterRule(localctx, 32, self.RULE_pos_literal)
         self._la = 0 # Token type
         try:
@@ -1325,13 +1325,13 @@ class LparseInputParser ( Parser ):
             self.state = 158
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.LPAR:
+            if _la==ASPProgramParser.LPAR:
                 self.state = 154
-                self.match(LparseInputParser.LPAR)
+                self.match(ASPProgramParser.LPAR)
                 self.state = 155
                 self.list_parameters()
                 self.state = 156
-                self.match(LparseInputParser.RPAR)
+                self.match(ASPProgramParser.RPAR)
 
 
         except RecognitionException as re:
@@ -1345,41 +1345,41 @@ class LparseInputParser ( Parser ):
     class List_parametersContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.List_parametersContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.List_parametersContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
-            return self.getTypedRuleContext(LparseInputParser.IdentifierContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.IdentifierContext,0)
 
 
         def variable(self):
-            return self.getTypedRuleContext(LparseInputParser.VariableContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.VariableContext,0)
 
 
         def constant(self):
-            return self.getTypedRuleContext(LparseInputParser.ConstantContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.ConstantContext,0)
 
 
         def pos_literal(self):
-            return self.getTypedRuleContext(LparseInputParser.Pos_literalContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.Pos_literalContext,0)
 
 
         def num_expression(self):
-            return self.getTypedRuleContext(LparseInputParser.Num_expressionContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.Num_expressionContext,0)
 
 
         def COMMA(self):
-            return self.getToken(LparseInputParser.COMMA, 0)
+            return self.getToken(ASPProgramParser.COMMA, 0)
 
         def list_parameters(self):
-            return self.getTypedRuleContext(LparseInputParser.List_parametersContext,0)
+            return self.getTypedRuleContext(ASPProgramParser.List_parametersContext,0)
 
 
         def MINUS(self):
-            return self.getToken(LparseInputParser.MINUS, 0)
+            return self.getToken(ASPProgramParser.MINUS, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_list_parameters
+            return ASPProgramParser.RULE_list_parameters
 
         def enterRule(self, listener):
             if hasattr(listener, "enterList_parameters"):
@@ -1394,7 +1394,7 @@ class LparseInputParser ( Parser ):
 
     def list_parameters(self):
 
-        localctx = LparseInputParser.List_parametersContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.List_parametersContext(self, self._ctx, self.state)
         self.enterRule(localctx, 34, self.RULE_list_parameters)
         self._la = 0 # Token type
         try:
@@ -1416,9 +1416,9 @@ class LparseInputParser ( Parser ):
                 self.state = 163
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==LparseInputParser.MINUS:
+                if _la==ASPProgramParser.MINUS:
                     self.state = 162
-                    self.match(LparseInputParser.MINUS)
+                    self.match(ASPProgramParser.MINUS)
 
 
                 self.state = 165
@@ -1439,9 +1439,9 @@ class LparseInputParser ( Parser ):
             self.state = 172
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==LparseInputParser.COMMA:
+            if _la==ASPProgramParser.COMMA:
                 self.state = 170
-                self.match(LparseInputParser.COMMA)
+                self.match(ASPProgramParser.COMMA)
                 self.state = 171
                 self.list_parameters()
 
@@ -1457,14 +1457,14 @@ class LparseInputParser ( Parser ):
     class PredicateContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.PredicateContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.PredicateContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(LparseInputParser.IDENTIFIER, 0)
+            return self.getToken(ASPProgramParser.IDENTIFIER, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_predicate
+            return ASPProgramParser.RULE_predicate
 
         def enterRule(self, listener):
             if hasattr(listener, "enterPredicate"):
@@ -1479,12 +1479,12 @@ class LparseInputParser ( Parser ):
 
     def predicate(self):
 
-        localctx = LparseInputParser.PredicateContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.PredicateContext(self, self._ctx, self.state)
         self.enterRule(localctx, 36, self.RULE_predicate)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 174
-            self.match(LparseInputParser.IDENTIFIER)
+            self.match(ASPProgramParser.IDENTIFIER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1496,14 +1496,14 @@ class LparseInputParser ( Parser ):
     class IdentifierContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.IdentifierContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.IdentifierContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(LparseInputParser.IDENTIFIER, 0)
+            return self.getToken(ASPProgramParser.IDENTIFIER, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_identifier
+            return ASPProgramParser.RULE_identifier
 
         def enterRule(self, listener):
             if hasattr(listener, "enterIdentifier"):
@@ -1518,12 +1518,12 @@ class LparseInputParser ( Parser ):
 
     def identifier(self):
 
-        localctx = LparseInputParser.IdentifierContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.IdentifierContext(self, self._ctx, self.state)
         self.enterRule(localctx, 38, self.RULE_identifier)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 176
-            self.match(LparseInputParser.IDENTIFIER)
+            self.match(ASPProgramParser.IDENTIFIER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1535,14 +1535,14 @@ class LparseInputParser ( Parser ):
     class ConstantContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.ConstantContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.ConstantContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def INTEGER(self):
-            return self.getToken(LparseInputParser.INTEGER, 0)
+            return self.getToken(ASPProgramParser.INTEGER, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_constant
+            return ASPProgramParser.RULE_constant
 
         def enterRule(self, listener):
             if hasattr(listener, "enterConstant"):
@@ -1557,12 +1557,12 @@ class LparseInputParser ( Parser ):
 
     def constant(self):
 
-        localctx = LparseInputParser.ConstantContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.ConstantContext(self, self._ctx, self.state)
         self.enterRule(localctx, 40, self.RULE_constant)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 178
-            self.match(LparseInputParser.INTEGER)
+            self.match(ASPProgramParser.INTEGER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1574,14 +1574,14 @@ class LparseInputParser ( Parser ):
     class VariableContext(ParserRuleContext):
 
         def __init__(self, parser, parent=None, invokingState=-1):
-            super(LparseInputParser.VariableContext, self).__init__(parent, invokingState)
+            super(ASPProgramParser.VariableContext, self).__init__(parent, invokingState)
             self.parser = parser
 
         def VARIABLE(self):
-            return self.getToken(LparseInputParser.VARIABLE, 0)
+            return self.getToken(ASPProgramParser.VARIABLE, 0)
 
         def getRuleIndex(self):
-            return LparseInputParser.RULE_variable
+            return ASPProgramParser.RULE_variable
 
         def enterRule(self, listener):
             if hasattr(listener, "enterVariable"):
@@ -1596,12 +1596,12 @@ class LparseInputParser ( Parser ):
 
     def variable(self):
 
-        localctx = LparseInputParser.VariableContext(self, self._ctx, self.state)
+        localctx = ASPProgramParser.VariableContext(self, self._ctx, self.state)
         self.enterRule(localctx, 42, self.RULE_variable)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 180
-            self.match(LparseInputParser.VARIABLE)
+            self.match(ASPProgramParser.VARIABLE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

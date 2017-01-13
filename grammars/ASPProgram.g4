@@ -1,4 +1,4 @@
-grammar LparseInput;
+grammar ASPProgram;
 
 @header {}
 

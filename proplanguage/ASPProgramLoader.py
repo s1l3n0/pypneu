@@ -1,22 +1,22 @@
 import antlr4
 import logging
+import proplanguage as lp
 
-from proplanguage import Atom, Literal, ExtLiteral, Formula, Operator, Rule
-from gen.LparseInputLexer import LparseInputLexer
-from gen.LparseInputListener import LparseInputListener
-from gen.LparseInputParser import LparseInputParser
+from gen.ASPProgramLexer import ASPProgramLexer
+from gen.ASPProgramListener import ASPProgramListener
+from gen.ASPProgramParser import ASPProgramParser
 
-logging.basicConfig(filename='LparseInputLoaderListener.log', filemode='w', level=logging.INFO)
+logging.basicConfig(filename='ASPProgramLoaderListener.log', filemode='w', level=logging.INFO)
 
-class LparseInputLoaderListener(LparseInputListener):
 
+class ASPProgramLoaderListener(ASPProgramListener):
     def __init__(self):
         self.decorations = {}
-        self.ruleList = []
+        self.rule_list = []
 
     def exitPos_literal(self, ctx):
         if ctx.predicate().IDENTIFIER():
-            atom = Atom(name=ctx.predicate().IDENTIFIER().getText())
+            atom = lp.Atom(name=ctx.predicate().IDENTIFIER().getText())
             self.decorations[ctx] = atom
             logging.info("captured pos literal: " + str(atom))
         else:
@@ -24,28 +24,40 @@ class LparseInputLoaderListener(LparseInputListener):
 
     def exitLiteral(self, ctx):
         atom = self.decorations[ctx.pos_literal()]
-        literal = Literal(
+
+        if ctx.MINUS():
+            neg = True
+        else:
+            neg = False
+
+        literal = lp.Literal(
             atom=atom,
-            neg=(ctx.MINUS())
+            neg=neg
         )
         self.decorations[ctx] = literal
         logging.info("captured literal: " + str(literal))
 
     def exitExt_literal(self, ctx):
         literal = self.decorations[ctx.literal()]
-        extliteral = ExtLiteral(
+
+        if ctx.NOT():
+            naf = True
+        else:
+            naf = False
+
+        ext_literal = lp.ExtLiteral(
             literal=literal,
-            naf=(ctx.NOT())
+            naf=naf
         )
-        self.decorations[ctx] = extliteral
-        logging.info("captured ext literal: " + str(extliteral))
+        self.decorations[ctx] = ext_literal
+        logging.info("captured ext literal: " + str(ext_literal))
 
     def exitList_literals(self, ctx):
         literal_list = []
 
         if ctx.literal():
             # for generality, we store ExtLiterals in the list, rather than Literals
-            literal = ExtLiteral(
+            literal = lp.ExtLiteral(
                 literal=self.decorations[ctx.literal()],
                 naf=False
             )
@@ -65,9 +77,9 @@ class LparseInputLoaderListener(LparseInputListener):
 
         if ctx.ext_literal():
             ext_literal = self.decorations[ctx.ext_literal()]
-            formula = Formula(
-                operator=Operator.NONE,
-                inputTerms=[ext_literal]
+            formula = lp.Formula(
+                operator=lp.Operator.NONE,
+                input_terms=[ext_literal]
             )
             formula_list.append(formula)
         else:
@@ -92,17 +104,17 @@ class LparseInputLoaderListener(LparseInputListener):
             r = len(literal_list)
 
         if l == len(literal_list) and l == r:
-            operator = Operator.AND
+            operator = lp.Operator.AND
         elif l == 1 and r == len(literal_list):
-            operator = Operator.OR
+            operator = lp.Operator.OR
         elif l == 1 and r == 1:
-            operator = Operator.XOR
+            operator = lp.Operator.XOR
         else:
-            operator = Operator.CHOICE
+            operator = lp.Operator.CHOICE
 
-        formula = Formula(
+        formula = lp.Formula(
             operator=operator,
-            inputTerms=literal_list        # should be ExtLiterals !!!
+            input_terms=literal_list  # should be ExtLiterals !!!
         )
 
         self.decorations[ctx] = formula
@@ -110,13 +122,13 @@ class LparseInputLoaderListener(LparseInputListener):
 
     def exitHead(self, ctx):
         if ctx.literal():
-            extliteral = ExtLiteral(
+            ext_literal = lp.ExtLiteral(
                 literal=self.decorations[ctx.literal()],
                 naf=False
             )
-            formula = Formula(
-                operator=Operator.NONE,
-                inputTerms=[extliteral]
+            formula = lp.Formula(
+                operator=lp.Operator.NONE,
+                input_terms=[ext_literal]
             )
         elif ctx.choice():
             formula = self.decorations[ctx.choice()]
@@ -129,9 +141,9 @@ class LparseInputLoaderListener(LparseInputListener):
     def exitBody(self, ctx):
         if ctx.list_ext_literals_expressions():
             formula_list = self.decorations[ctx.list_ext_literals_expressions()]
-            formula = Formula(
-                operator=Operator.AND,
-                inputFormulas=formula_list
+            formula = lp.Formula(
+                operator=lp.Operator.AND,
+                input_formulas=formula_list
             )
         elif ctx.choice():
             formula = self.decorations[ctx.choice()]
@@ -147,11 +159,10 @@ class LparseInputLoaderListener(LparseInputListener):
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
-        rule = Rule(body=body)
+        rule = lp.Rule(body=body)
 
         self.decorations[ctx] = rule
         logging.info("captured constraint: :- " + str(rule))
-        self.ruleList.append(rule)
 
     def exitNormrule(self, ctx):
         if ctx.head():
@@ -165,7 +176,7 @@ class LparseInputLoaderListener(LparseInputListener):
             raise ValueError("Unexpected element in " + ctx.getText())
 
         logging.info("captured normal rule: " + str(head) + ":-" + str(body))
-        self.decorations[ctx] = Rule(head = head, body = body)
+        self.decorations[ctx] = lp.Rule(head=head, body=body)
 
     def exitAsprule(self, ctx):
         if ctx.constraint():
@@ -177,7 +188,7 @@ class LparseInputLoaderListener(LparseInputListener):
 
         logging.info("captured asp rule: " + str(rule))
         self.decorations[ctx] = rule
-        self.ruleList.append(rule)
+        self.rule_list.append(rule)
 
     def exitAspfact(self, ctx):
         if ctx.head():
@@ -185,28 +196,43 @@ class LparseInputLoaderListener(LparseInputListener):
         else:
             raise ValueError("Unexpected element in " + ctx.getText())
 
-        rule = Rule(head = head)
+        rule = lp.Rule(head=head)
 
         logging.info("captured asp fact: " + str(rule))
         self.decorations[ctx] = rule
-        self.ruleList.append(rule)
+        self.rule_list.append(rule)
 
-def parseString(code):
+
+def parse_literal(code):
+    # return parse(antlr4.InputStream(code)+".") ## Highly inefficient
+    if code[0] is "-":
+        neg = True
+        code = code[1:]
+    else:
+        neg = False
+
+    for char in code:
+        if not char.isalpha():
+            raise ValueError("Unexpected element in " + code)
+
+    return lp.Literal(atom=lp.Atom(code), neg=neg)
+
+
+def parse_string(code):
     return parse(antlr4.InputStream(code))
 
-def parse(inputstream):
-    lexer = LparseInputLexer(inputstream)
+
+def parse(input_stream):
+    lexer = ASPProgramLexer(input_stream)
     stream = antlr4.CommonTokenStream(lexer)
-    parser = LparseInputParser(stream)
+    parser = ASPProgramParser(stream)
     tree = parser.program()
-    loader = LparseInputLoaderListener()
+    loader = ASPProgramLoaderListener()
     walker = antlr4.ParseTreeWalker()
     walker.walk(loader, tree)
-    return loader.ruleList
+    return lp.Program(rule_list=loader.rule_list)
+
 
 if __name__ == '__main__':
-    ruleList = parseString("b :- a, b. c :- a.")
-    for rule in ruleList:
-        print str(rule)
-
-
+    program = parse_string("b :- not a. -c :- a. a.")
+    answer_sets = program.solve()

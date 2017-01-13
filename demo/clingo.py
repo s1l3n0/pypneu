@@ -14,7 +14,7 @@ ctl = Control()
 ctl.load("program.lp")
 ctl.ground([("base", [])])
 with ctl.solve_iter() as it:
-    for m in it: print m
+    for m in it: print str(m) + "#########"
 
 # ctl.solve([], on_model)
 
