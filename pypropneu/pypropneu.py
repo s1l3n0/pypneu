@@ -9,6 +9,7 @@ import logging
 
 logging.basicConfig(filename='pypropneu.log', filemode='w', level=logging.INFO)
 
+
 class Node:
     # Fields:
     # id
@@ -18,16 +19,19 @@ class Node:
         self.inputs = []
         self.outputs = []
 
+
 class Token:
     # Fields:
     # label : String
     def __init__(self, label=None):
         self.label = label
 
+
 class ArcType:
     NORMAL = 1
     INHIBITOR = 2
     RESET = 3
+
 
 class Arc:
     # -- Fields --
@@ -44,6 +48,7 @@ class Arc:
         source.outputs.append(self)
         target.inputs.append(self)
 
+
 class Place(Node):
     # -- Fields --
     # name : String
@@ -57,6 +62,7 @@ class Place(Node):
         logging.info("Flushing " + self.name)
         self.marking = []
 
+
 class TransitionEvent():
     # -- Fields --
     # transition : Transition
@@ -64,6 +70,7 @@ class TransitionEvent():
     def __init__(self, transition, token):
         self.transition = transition
         self.token = token
+
 
 class Binding(Node):
     # -- Fields --
@@ -73,6 +80,7 @@ class Binding(Node):
         Node.__init__(self)
         self.name = name
         self.operator = operator
+
 
 class Transition(Node):
     # -- Fields --
@@ -134,6 +142,7 @@ class Transition(Node):
                 raise ValueError("Unexpected type of input arc")
         return events
 
+
 class PetriNetStructure:
     # -- Fields --
     # places : Place list
@@ -150,6 +159,7 @@ class PetriNetStructure:
         for place in self.places:
             output = output + place.name + ": " + str(len(place.marking)) + ", "
         print output[:-2]
+
 
 class PetriNet(PetriNetStructure):
 

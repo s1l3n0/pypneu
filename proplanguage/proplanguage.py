@@ -1,8 +1,7 @@
-from dependencygraph import DependencyGraph
+import dependencygraph as dg
 from gringo import Control, Model, Fun
 
 import ASPProgramLoader
-
 
 class Atom:
     # -- Fields --
@@ -235,7 +234,7 @@ class Program:
         self.rule_list = rule_list
 
     def dependency_graph(self):
-        return DependencyGraph(self.rule_list)
+        return dg.DependencyGraph(self.rule_list)
 
     def to_ASP(self):
         output = ""
@@ -261,3 +260,11 @@ class Program:
                     answer_set.append(ASPProgramLoader.parse_literal(str(atom)))
                 answer_sets.append(answer_set)
         return answer_sets
+
+if __name__ == '__main__':
+    program = ASPProgramLoader.parse_string("b :- not a. -c :- a. a.")
+    answer_sets = program.solve()
+    assert len(answer_sets) == 1
+    assert len(answer_sets[0]) == 2
+    assert answer_sets[0][0] == Literal(Atom("a"), False)
+    assert answer_sets[0][1] == Literal(Atom("c"), True)

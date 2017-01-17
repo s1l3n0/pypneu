@@ -9,6 +9,7 @@ import logging
 
 logging.basicConfig(filename='pypneu.log', filemode='w', level=logging.INFO)
 
+
 class Node:
     # Fields:
     # inputs
@@ -21,6 +22,7 @@ class ArcType:
     NORMAL = 1
     INHIBITOR = 2
     RESET = 3
+
 
 class Arc:
     # Fields:
@@ -36,6 +38,7 @@ class Arc:
         source.outputs.append(self)
         target.inputs.append(self)
 
+
 class Place(Node):
     # Fields:
     # name
@@ -49,11 +52,13 @@ class Place(Node):
         logging.info("Flushing " + self.name)
         self.marking = 0
 
+
 class TransitionEvent():
     # Fields:
     # transition
     def __init__(self, transition):
         self.transition = transition
+
 
 class Transition(Node):
     # Fields:
@@ -110,6 +115,7 @@ class Transition(Node):
                 raise ValueError("Unexpected type of input arc")
         return events
 
+
 class PetriNetStructure:
     # Fields:
     # places
@@ -126,6 +132,7 @@ class PetriNetStructure:
         for place in self.places:
             output = output + place.name + ": " + str(place.marking) + ", "
         print output[:-2]
+
 
 class PetriNet(PetriNetStructure):
 
