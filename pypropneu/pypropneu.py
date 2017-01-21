@@ -18,7 +18,7 @@ class Node:
     def __init__(self):
         self.inputs = []
         self.outputs = []
-        self.nid = None              ## assigned when attached to a net
+        self.nid = None ## assigned when attached to a net
 
 class Token:
     # Fields:
@@ -151,21 +151,19 @@ class Transition(Node):
 
     def ProduceOutputTokens(self):
         token = Token()
-        events = []
+        event = TransitionEvent(self, token)
         for output in self.outputs:
             if output.type == ArcType.NORMAL:
                 if output.target.__class__ is Place:
                     logging.info("producing token in place " + output.target.name)
-                    event = TransitionEvent(self, token)
                     output.target.marking = True
-                    events.append(event)
             elif output.type == ArcType.RESET:
                 if output.target.__class__ is Place:
                     logging.info("resetting place " + output.target.name)
-                    output.target.Flush()
+                    output.target.flush()
             else:
                 raise ValueError("Unexpected type of input arc")
-        return events
+        return event
 
 
 class TransitionEvent():
@@ -198,12 +196,12 @@ class PetriNetStructure:
 
     def __init__(self, places=(), transitions=(), p_bindings=(), t_bindings=(), arcs=()):
         self.places = places
-        self.id2place = self.__build_dict(places)
         self.transitions = transitions
+        self.arcs = arcs
+        self.id2place = self.__build_dict(places)
         self.id2transition = self.__build_dict(transitions)
         self.p_bindings = p_bindings
         self.t_bindings = t_bindings
-        self.arcs = arcs
 
     def PrintMarking(self):
         output = ""
@@ -322,7 +320,7 @@ class PetriNet(PetriNetStructure):
 
         logging.info("looking for enabled transitions...")
         for t in self.transitions:
-            if t.IsEnabled():
+            if t.is_enabled():
                 logging.info("pre-fire " + t.name + "!!!")
                 preFiredTransition = t
                 ## to have a rotation, I simply implement a FIFO mechanism
@@ -350,8 +348,8 @@ class PetriNet(PetriNetStructure):
             events = []
             for firedTransition in self.transitions_to_be_fired:
                 print firedTransition.name + " fires"
-                firedTransition.ConsumeInputTokens()
-                events.extend(firedTransition.ProduceOutputTokens())
+                firedTransition.consume_input_tokens()
+                events.append(firedTransition.produce_output_tokens())
             return events
         else:
             return []
