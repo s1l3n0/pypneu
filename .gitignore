@@ -11,3 +11,6 @@
 
 ### local stuff
 tmp/
+legacy/
+demo/
+*.log

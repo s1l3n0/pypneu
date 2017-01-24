@@ -93,29 +93,29 @@ def buildForkPetriNet(n=1, p1=None):
 
     return places, transitions, arcs
 
-evaluation_file = open("../tmp/evaluation.txt", "w")
+evaluation_file = open("../tmp/evaluation.csv", "w")
 
 for i in range(1, 11, 1):
     for n in range(1, 9, 1):
         (places, transitions, arcs) = buildForkPetriNet(n)
         net = PetriNetAnalysis(places, transitions, arcs)
         (models, timing, iterations) = net.run_analysis(bug=True)
-        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Fork" + ";" + "LPPN" + ";" + str(models) + ";" + str(timing) + "\n")
+        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Fork" + ";" + "LPPN" + ";" + str(models) + ";" + str(timing) + ";\n")
 
         (places, transitions, arcs) = buildForkPetriNet(n)
         netEC = PetriNetEventCalculus(places, transitions, arcs)
         (models, timing) = netEC.solve(n)
-        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Fork" + ";" + "EC" + ";" + str(models) + ";" + str(timing) + "\n")
+        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Fork" + ";" + "EC" + ";" + str(models) + ";" + str(timing) + ";\n")
 
     for n in range(1, 52, 5):
         (places, transitions, arcs) = buildSerialPetriNet(n)
         net = PetriNetAnalysis(places, transitions, arcs)
         (models, timing, iterations) = net.run_analysis()
-        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Serial" + ";" + "LPPN" + ";" + str(models) + ";" + str(timing) + "\n")
+        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Serial" + ";" + "LPPN" + ";" + str(models) + ";" + str(timing) + ";\n")
 
         (places, transitions, arcs) = buildSerialPetriNet(n)
         netEC = PetriNetEventCalculus(places, transitions, arcs)
         (models, timing) = netEC.solve(n-1)
-        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Serial" + ";" + "EC" + ";" + str(models) + ";" + str(timing) + "\n")
+        evaluation_file.write(str(i) + ";" + str(n) + ";" + "Serial" + ";" + "EC" + ";" + str(models) + ";" + str(timing) + ";\n")
 
 evaluation_file.close()
