@@ -6,25 +6,26 @@
 
 import logging
 from clingo import Control, Function, parse_program
+from collections import deque
+from timeit import default_timer as timer
 
-logging.basicConfig(filename='pypropneu.log', filemode='w', level=logging.INFO)
+# logging.basicConfig(filename='pypropneu.log', filemode='w', level=# logging.INFO)
 
 
 class Node:
-    # Fields:
-    # id
+    # Fields
     # inputs : Arc list
     # outputs : Arc list
     def __init__(self):
         self.inputs = []
         self.outputs = []
-        self.nid = None              ## assigned when attached to a net
+        self.nid = None ## assigned when attached to a net
 
-class Token:
-    # Fields:
-    # label : String
-    def __init__(self, label=None):
-        self.label = label
+    def __str__(self):
+        if self.nid == None:
+            return "Not attached to a net yet."
+        else:
+            return self.nid
 
 
 class ArcType:
@@ -51,13 +52,13 @@ class Place(Node):
     # -- Fields --
     # name : String
     # marking : Token list
-    def __init__(self, name, marking=False):
+    def __init__(self, name="p", marking=False):
         Node.__init__(self)
         self.name = name
         self.marking = marking
 
     def Flush(self):
-        logging.info("Flushing " + self.name)
+        # logging.info("Flushing " + self.name)
         self.marking = False
 
 
@@ -90,7 +91,13 @@ class Binding(Node):
                 code += input.source.nid + ", "
             code = code[:-2]+"."
         elif self.operator is BindingOperator.OR:
-            raise ValueError("Not yet implemented")
+            if len(self.outputs) != 1:
+                raise ValueError("Wrong binding constraint")
+
+            code += self.outputs[0].target.nid + " :- 1{"
+            for input in self.inputs:
+                code += input.source.nid + "; "
+            code = code[:-2]+"}."
         elif self.operator is BindingOperator.XOR:
             raise ValueError("Not yet implemented")
         elif self.operator is BindingOperator.IMPLIES:
@@ -109,15 +116,15 @@ class Transition(Node):
 
     # -- Fields --
     # name : String
-    def __init__(self, name):
+    def __init__(self, name="t"):
         Node.__init__(self)
         self.name = name
 
-    def IsEnabled(self):
-        logging.info("checking transition " + self.name + " if enabled.")
+    def is_enabled(self):
+        # logging.info("checking transition " + self.name + " if enabled.")
 
         if len(self.inputs) == 0:
-            logging.info("no inputs: disabled.")
+            # logging.info("no inputs: disabled.")
             return False
 
         found = False
@@ -125,56 +132,43 @@ class Transition(Node):
             if input.type == ArcType.NORMAL:
                 if input.source.__class__ is Place:
                     if input.source.marking is False:
-                        logging.info("no token is available in place " + input.source.name + ": disabled.")
+                        # logging.info("no token is available in place " + input.source.name + ": disabled.")
                         return False
                     else: found = True
             elif input.type == ArcType.INHIBITOR:
                 if input.source.__class__ is Place:
                     if input.source.marking is True:
-                        logging.info("token in place " + input.source.name + ": inhibited.")
+                        # logging.info("token in place " + input.source.name + ": inhibited.")
                         return False
                     else: found = True
 
         if found: return True
         else: return False
 
-    def ConsumeInputTokens(self):
+    def consume_input_tokens(self):
         for input in self.inputs:
             if input.type == ArcType.NORMAL:
                 if input.source.__class__ is Place:
                     if input.source.marking is False:
                         raise ValueError("There should be a token in place "+input.source.name)
-                    logging.info("consuming token in place " + input.source.name)
+                    # logging.info("consuming token in place " + input.source.name)
                     input.source.marking = False
             else:
                 raise ValueError("Unexpected type of input arc")
 
-    def ProduceOutputTokens(self):
-        token = Token()
-        events = []
+    def produce_output_tokens(self):
         for output in self.outputs:
             if output.type == ArcType.NORMAL:
                 if output.target.__class__ is Place:
-                    logging.info("producing token in place " + output.target.name)
-                    event = TransitionEvent(self, token)
+                    # logging.info("producing token in place " + output.target.name)
                     output.target.marking = True
-                    events.append(event)
             elif output.type == ArcType.RESET:
                 if output.target.__class__ is Place:
-                    logging.info("resetting place " + output.target.name)
-                    output.target.Flush()
+                    # logging.info("resetting place " + output.target.name)
+                    output.target.flush()
             else:
                 raise ValueError("Unexpected type of input arc")
-        return events
 
-
-class TransitionEvent():
-    # -- Fields --
-    # transition : Transition
-    # token : Token
-    def __init__(self, transition, token):
-        self.transition = transition
-        self.token = token
 
 
 class PetriNetStructure:
@@ -182,6 +176,8 @@ class PetriNetStructure:
     # places : Place list
     # transitions : Transition list
     # arcs : Arc list
+    # p_bindings : Bindings list on places
+    # t_bindings : Bindings list on transitions
 
     def __build_dict(self, nodes):
         dict = {}
@@ -196,22 +192,23 @@ class PetriNetStructure:
             node.nid = nid
         return dict
 
-    def __init__(self, places=(), transitions=(), p_bindings=(), t_bindings=(), arcs=()):
+    def __init__(self, places=(), transitions=(), arcs=(), p_bindings=(), t_bindings=()):
         self.places = places
-        self.id2place = self.__build_dict(places)
         self.transitions = transitions
+        self.arcs = arcs
+        self.id2place = self.__build_dict(places)
         self.id2transition = self.__build_dict(transitions)
         self.p_bindings = p_bindings
         self.t_bindings = t_bindings
-        self.arcs = arcs
 
-    def PrintMarking(self):
+    def marking_to_string(self):
         output = ""
         for place in self.places:
-            output = output + place.name + ": " + str(place.marking) + ", "
-        print output[:-2]
+            output = output + place.nid + ": " + str(place.marking) + ", "
+        return output[:-2]
 
-    def __bindings_code(self, bindings):
+    @staticmethod
+    def __bindings_code(bindings):
         code = ""
         for binding in bindings:
             code += binding.to_ASP()
@@ -223,7 +220,8 @@ class PetriNetStructure:
     def t_bindings_code(self):
         return self.__bindings_code(self.t_bindings)
 
-    def __interface_code(self, nodes):
+    @staticmethod
+    def __interface_code(nodes):
         code = ""
         for node in nodes:
             code += "#external " + node.nid + ".\n"
@@ -242,88 +240,95 @@ class PetriNetStructure:
         return self.t_interface_code() + self.t_bindings_code()
 
 
-class PetriNet(PetriNetStructure):
+class PetriNetExecution(PetriNetStructure):
+
+    def __init__(self, places=(), transitions=(), arcs=(), p_bindings=(), t_bindings=()):
+        PetriNetStructure.__init__(self, places, transitions, arcs, p_bindings, t_bindings)
+        self.p_prog = None
+        self.t_prog = None
 
     def update_pid(self, model):
         for atom in model.symbols(shown=True):
-            logging.info("updating " + str(atom) + " to true")
+            # logging.info("updating " + str(atom) + " to true")
             self.id2place[str(atom)].marking = True
 
     def update_tid(self, model):
         for atom in model.symbols(shown=True):
-            logging.info("adding " + str(atom) + " to transition to be fired")
+            # logging.info("adding " + str(atom) + " to transition to be fired")
             self.transitions_to_be_fired.append(self.id2transition[str(atom)])
 
-    def RunSimulation(self, iterations):
+    def init_control(self):
 
+        p_code = self.p_code()
         out_file = open("../tmp/p.lp", "w")
-        out_file.write(self.p_code())
+        out_file.write(p_code)
         out_file.close()
 
         ## create the ASP solver control for the constraints on places
-        p_prog = Control()
-        p_prog.configuration.solve.models = 0  # to obtain all answer sets
-        # logging.info("ASP program binding places: "+ self.p_code())
-        with p_prog.builder() as builder:
-            parse_program(self.p_code(), lambda statement: builder.add(statement))
-        p_prog.ground([("base", [])])
+        self.p_prog = Control()
+        self.p_prog.configuration.solve.models = 0  # to obtain all answer sets
+        # # logging.info("ASP program binding places: "+ self.p_code())
+        with self.p_prog.builder() as builder:
+            parse_program(p_code, lambda statement: builder.add(statement))
+        self.p_prog.ground([("base", [])])
 
+        t_code = self.t_code()
         out_file = open("../tmp/t.lp", "w")
-        out_file.write(self.t_code())
+        out_file.write(t_code)
         out_file.close()
 
         ## create the ASP solver control for the constraints on transitions
-        t_prog = Control()
-        t_prog.configuration.solve.models = 0
-        # logging.info("ASP program binding transitions: " + self.t_code())
-        with t_prog.builder() as builder:
-            parse_program(self.t_code(), lambda statement: builder.add(statement))
-        t_prog.ground([("base", [])])
+        self.t_prog = Control()
+        self.t_prog.configuration.solve.models = 0
+        # # logging.info("ASP program binding transitions: " + self.t_code())
+        with self.t_prog.builder() as builder:
+            parse_program(t_code, lambda statement: builder.add(statement))
+        self.t_prog.ground([("base", [])])
+
+    def run_simulation(self, iterations):
+
+        self.init_control()
 
         n = 0
 
         for i in range(iterations):
-            self.PrintMarking()
-
-            self.transitions_to_be_fired = []
-
-            logging.info("resolution bindings on places")
-            logging.info("assign current marking")
-            ## assign current marking
-            for place in self.places:
-                if place.marking is True:
-                    logging.info("assigning " + place.nid + " to true")
-                    p_prog.assign_external(Function(place.nid), True)
-                else:
-                    logging.info("assigning " + place.nid + " to false")
-                    p_prog.assign_external(Function(place.nid), False)
-
-            logging.info("solving bindings on places...")
-            ## solve and update marking [TODO: check only one answer sets!]
-            p_prog.solve(on_model=self.update_pid)
-
-            logging.info("attempting to run step " + str(i))
-            if not self.RunStep(t_prog):
+            # logging.info("attempting to run step " + str(i))
+            if not self.run_execution_step():
                 break
             else:
                 n = n + 1
-                logging.info("step " + str(i) + " completed")
+                # logging.info("step " + str(i) + " completed")
 
-        self.PrintMarking()
+        print self.marking_to_string()
 
         print str(n) + " steps completed."
+        return n
 
-    def RunStep(self, t_prog):
-        firedTransitionEvents = self.BruteForceExecution(t_prog)
+    def run_execution_step(self):
+
+        self.transitions_to_be_fired = []
+
+        # logging.info("resolution bindings on places")
+        # logging.info("assign current marking")
+        ## assign current marking
+        for place in self.places:
+            # logging.info("assigning " + place.nid + " to "+str(place.marking))
+            self.p_prog.assign_external(Function(place.nid), place.marking)
+
+        # logging.info("solving bindings on places...")
+        ## solve and update marking [TODO: check only one answer sets!]
+        self.p_prog.solve(on_model=self.update_pid)
+
+        firedTransitionEvents = self.brute_force_execution()
         return len(firedTransitionEvents) > 0
 
-    def BruteForceExecution(self, t_prog):
+    def brute_force_execution(self):
         preFiredTransition = None
 
-        logging.info("looking for enabled transitions...")
+        # logging.info("looking for enabled transitions...")
         for t in self.transitions:
-            if t.IsEnabled():
-                logging.info("pre-fire " + t.name + "!!!")
+            if t.is_enabled():
+                # logging.info("pre-fire " + t.name + "!!!")
                 preFiredTransition = t
                 ## to have a rotation, I simply implement a FIFO mechanism
                 self.transitions.remove(preFiredTransition)
@@ -331,58 +336,352 @@ class PetriNet(PetriNetStructure):
                 break
 
         if preFiredTransition is not None:
-            print preFiredTransition.name + " pre-fires"
+            # print preFiredTransition.name + " pre-fires"
 
-            logging.info("resolution bindings on transitions...")
+            # logging.info("resolution bindings on transitions...")
 
-            logging.info("assign current pre-fire")
+            # logging.info("assign current pre-fire")
             for transition in self.transitions:
                 if transition == preFiredTransition:
-                    logging.info("assigning " + transition.nid + " to true")
-                    t_prog.assign_external(Function(transition.nid), True)
+                    # logging.info("assigning " + transition.nid + " to true")
+                    self.t_prog.assign_external(Function(transition.nid), True)
                 else:
-                    logging.info("assigning " + transition.nid + " to false")
-                    t_prog.assign_external(Function(transition.nid), False)
+                    # logging.info("assigning " + transition.nid + " to false")
+                    self.t_prog.assign_external(Function(transition.nid), False)
 
             ## solve and get transition events [TODO: check only one answer sets!]
-            t_prog.solve(on_model=self.update_tid)
+            self.t_prog.solve(on_model=self.update_tid)
 
             events = []
             for firedTransition in self.transitions_to_be_fired:
-                print firedTransition.name + " fires"
-                firedTransition.ConsumeInputTokens()
-                events.extend(firedTransition.ProduceOutputTokens())
+                # print firedTransition.name + " fires"
+                firedTransition.consume_input_tokens()
+                events.append(firedTransition.produce_output_tokens())
             return events
         else:
             return []
 
-# really simple Petri net
-# two places, a transition, a logic operator on places and one on transitions
+    def fire(self, fired_transitions_group):
+        events = []
+        for fired_transition in fired_transitions_group.set:
+            # print fired_transition.name + " fires"
+            fired_transition.consume_input_tokens()
+            events.append(fired_transition.produce_output_tokens())
+        return events
 
-p1 = Place("p1", True)
-p2 = Place("p2", False)
-p3 = Place("p3", False)
-p4 = Place("p4", False)
-p5 = Place("p5", False)
 
-bp1 = Binding(BindingOperator.AND)
-bt1 = Binding(BindingOperator.IMPLIES)
+class PetriNetAnalysis(PetriNetExecution):
 
-t1 = Transition("t1")
-t2 = Transition("t2")
+    def __init__(self, places=(), transitions=(), arcs=(), p_bindings=(), t_bindings=()):
+        PetriNetStructure.__init__(self, places, transitions, arcs, p_bindings, t_bindings)
+        self.path_base = None
+        self.state_base = None
+        self.current_path = None
+        self.current_state = None
+        self.base_path = None
+        self.base_state = None
+        self.last_events = None
+        self.markings = None
+        self.fireable_groups = None
+        self.restarted = None
 
-a1 = Arc(p1, t1)
-a2 = Arc(t1, p2)
+    def status(self):
+        # print "Summary: " + self.pathBase.toLog()
+        print "######################## "
+        if self.path_base is not None:
+            print "paths: "
+            for path in self.path_base:
+                print str(path)
+        if self.state_base is not None:
+            print "states: "
+            for state in self.state_base:
+                print str(state)
+        print "######################## "
 
-a3 = Arc(p2, bp1)
-a4 = Arc(p5, bp1)
-a5 = Arc(bp1, p4)
+    def update_pid(self, model):
+        for atom in model.symbols(shown=True):
+            self.id2place[str(atom)].marking = True
+        self.current_path = self.base_path.clone()
+        self.current_state = self.save_consequent(self.base_state, self.last_events)
+        # logging.info("received new place model: "+str(self.current_state))
+        # record the starting path
+        if self.current_state not in self.markings:
+            # logging.info("record the starting path...")
+            self.markings.append(self.current_state)
+            self.path_base.append(self.current_path)
 
-a6 = Arc(t1, bt1)
-a7 = Arc(bt1, t2)
+    def update_tid(self, model):
+        fireable_group = []
+        for atom in model.symbols(shown=True):
+            # logging.info("adding " + str(atom) + " to transition to be fired")
+            fireable_group.append(self.id2transition[str(atom)])
+        self.fireable_groups.append(Group(fireable_group))
+        # logging.info("received new transition model: "+str(fireable_group))
 
-a8 = Arc(t2, p5)
+    def get_fireable_groups(self, fireable_transition):
+        # logging.info("resolution bindings on transitions...")
+        # logging.info("assign current pre-fire")
+        for transition in self.transitions:
+            if transition == fireable_transition:
+                # logging.info("assigning " + transition.nid + " to true")
+                self.t_prog.assign_external(Function(transition.nid), True)
+            else:
+                # logging.info("assigning " + transition.nid + " to false")
+                self.t_prog.assign_external(Function(transition.nid), False)
+        self.fireable_groups = []
+        self.t_prog.solve(on_model=self.update_tid)
 
-net = PetriNet([p1, p2, p3, p4, p5], [t1, t2], [bp1], [bt1], [a1, a2, a3, a4, a5, a6, a7, a8])
+    def run_analysis(self, iterations = 2000, bug=False):
 
-net.RunSimulation(5)
+        self.init_control()
+        self.path_base = deque()
+        self.state_base = deque()
+        self.current_path = None
+        self.current_state = None
+        self.base_path = Path()
+        self.base_state = None
+        self.last_events = ()
+        self.bug = bug ## TODO: nasty bug in counting paths for forks.
+
+        start = timer()
+        n = 0
+        for i in range(iterations):
+            # logging.info("attempting to run analysis step " + str(i))
+            if self.run_analysis_step() is False:
+                break
+            else:
+                n = n + 1
+                # logging.info("step " + str(i) + " completed")
+        end = timer()
+
+        timing = end - start
+        print str(len(self.path_base)) + " paths found (" + str(n) + " iterations) in " + str(timing) + " ms."
+
+        # self.status()
+        return len(self.path_base), timing, n
+
+    # save the current marking, if it was not already saved before
+    def save_state(self):
+        marking = {}
+        for place in self.places:
+            marking[place.nid] = place.marking
+        for state in self.state_base:
+            if state.marking == marking:
+                return state
+
+        new_state = State(marking=marking, sid="s"+str(len(self.state_base)))
+        # logging.info("creating state "+str(new_state))
+
+        all_fireable_groups = []
+        self.fireable_groups = []
+        if new_state.events_to_state is None:
+            for transition in self.transitions:
+                if transition.is_enabled():
+                    self.get_fireable_groups(transition)
+                    for group in self.fireable_groups:
+                        if group not in all_fireable_groups:
+                            all_fireable_groups.append(group)
+
+            new_state.events_to_state = {}
+            for group in all_fireable_groups:
+                new_state.events_to_state[group] = None
+                # logging.info("attaching group of events to "+str(new_state))
+
+        self.state_base.append(new_state)
+        return new_state
+
+    # save the current state as consequent of a given firing
+    def save_consequent(self, antecedent = None, fired_events = ()):
+        state = self.save_state()
+        # logging.info("anchoring state "+state.sid+" to current path")
+        self.current_path.steps.append(state)
+        if len(fired_events) > 0:
+            # logging.info("saving connection " + antecedent.sid + " -->|" + str(fired_events) + "|-->" + state.sid)
+            if fired_events in antecedent.events_to_state:
+                antecedent.events_to_state[fired_events] = state
+                self.current_path.events_per_steps.append(fired_events)
+            else:
+                raise ValueError("I expected to have these events already saved in the antecedent.")
+        return state
+
+    def load_state(self, state):
+        # logging.info("recovering state "+str(state))
+        marking = state.marking
+        for place in self.places:
+            place.marking = marking[place.nid]
+
+    def trace_status(self, step):
+        print "########## "+ step +" ##############"
+        print "base path: "+str(self.base_path)
+        print "current path: "+str(self.current_path)
+        print "path base: " + ', '.join(map(str, self.path_base))
+        print "------------------------------------"
+        print "base state: "+str(self.base_state)
+        print "current state: "+str(self.current_state)
+        print "state base: " + ', '.join(map(str, self.state_base))
+        print "------------------------------------"
+        print "restarted: " + str(self.restarted)
+        print "####################################"
+
+    def run_analysis_step(self):
+
+        self.markings = []
+
+        # self.trace_status("1. before solving place bindings...")
+
+        # logging.info("resolution bindings on places")
+        # logging.info("assign current marking")
+        ## assign current marking
+        for place in self.places:
+            # logging.info("assigning " + place.nid + " to "+str(place.marking))
+            self.p_prog.assign_external(Function(place.nid), place.marking)
+        # logging.info("solving bindings on places...")
+        self.p_prog.solve(on_model=self.update_pid)
+        # logging.info("completed solving.")
+
+        # self.trace_status("3. after solving place bindings...")
+
+        next_events = None
+
+        if self.bug is False:
+            if self.restarted is False:
+                self.path_base.remove(self.base_path)
+
+        # the execution is complete if in the execution path we find the same state before the last one
+        # if it is not complete, check for new events to fire
+        if not (self.current_path.steps.index(self.current_state) + 1 < len(self.current_path.steps)):
+            self.restarted = False
+
+            ## consolidate the last computed state/path amongst all answer sets
+            self.base_state = self.current_state
+            self.base_path = self.current_path
+            # self.trace_status("4. after settled bases...")
+
+            next_events = self.current_state.find_next_events()
+        # else:
+            # logging.info("execution completed: found two times the same state in the same path.")
+
+        # if it is complete, backtrack to uncovered events [depth-first search]
+        if next_events is None:
+            # logging.info("backtracking...")
+            self.restarted = False
+
+            # record this completed path
+            # # logging.info("record the completed path...")
+            # self.path_base.append(self.current_path)
+            # print "completed path: "+', '.join(map(str, self.path_base))
+
+            # go backwards until you don't find some next event to be covered
+            for i in range(len(self.current_path.steps) - 2, -1, -1):
+                # logging.info("checking at step "+str(i)+"...")
+
+                step = self.current_path.steps[i]
+                next_events = step.find_next_events()
+
+                if next_events is not None:
+                    # logging.info("found path still to be covered.")
+                    self.restarted = True
+                    self.current_state = step
+                    self.current_path = self.current_path.clone(i)
+                    self.load_state(step)
+                    self.path_base.remove(self.base_path)
+                    self.base_path = self.current_path
+                    self.base_state = self.current_state
+                    # self.trace_status("5. after succesful backtracking...")
+                    break
+
+        if next_events is None:
+
+            if self.restarted is True:
+                self.path_base.remove(self.base_path)
+
+            # self.trace_status("6. after unsuccesful backtracking...")
+
+            # logging.info("no new path to be covered.")
+            return False
+        else:
+            # self.trace_status("7. before firing...")
+            self.fire(next_events)
+            self.last_events = next_events
+            return True
+
+
+class Path:
+
+    def __init__(self):
+        self.steps = []
+        self.events_per_steps = []
+
+    def __str__(self):
+        output = ""
+        for i in range(0, len(self.steps)):
+            output += "(" + self.steps[i].sid + ")"
+            if (i < len(self.steps) - 1):
+               output += " -- " + str(self.events_per_steps[i]) + " -- "
+        return output
+
+    # shallow copy up to step n
+    def clone(self, n=None):
+        new_path = Path()
+        assert (len(self.steps) == len(self.events_per_steps) + 1) or (len(self.steps) == 0 and len(self.events_per_steps) == 0)
+        if n is None: n = len(self.steps)
+        for i, step in enumerate(self.steps):
+            if i <= n: new_path.steps.append(step)
+        for i, events_per_step in enumerate(self.events_per_steps):
+            if i <= n-1: new_path.events_per_steps.append(events_per_step)
+        return new_path
+
+
+class Group:
+
+    def __init__(self, set=None):
+        if set is None:
+            self.set = []
+        else:
+            self.set = set
+
+    def __len__(self):
+        return len(self.set)
+
+    def __hash__(self):
+        key = ""
+        for elem in sorted(self.set):
+            key += str(elem)
+        return hash(key)
+
+    def __str__(self):
+        output = ""
+        for elem in self.set:
+            output += str(elem) + ", "
+        return output[:-2]
+
+    def add(self, elem):
+        if elem not in self.set:
+            self.set.append(elem)
+
+
+
+class State:
+
+    def __init__(self, marking=None, sid=None):
+        self.marking = marking
+        self.sid = sid
+        self.events_to_state = None
+
+    def __str__(self):
+        output = self.sid + " # "
+        for nid in self.marking:
+            output += nid + ": " + str(self.marking[nid]) + ", "
+        output = output[:-2] + "; "
+        if self.events_to_state is not None:
+            for group in self.events_to_state:
+                output += str(group) + " -> " + (self.events_to_state[group].sid if self.events_to_state[group] is not None else "None") + ", "
+        return output[:-2]
+
+    def find_next_events(self):
+        next_events = None
+        for key in self.events_to_state:
+            if self.events_to_state[key] is None:
+                next_events = key
+                break
+        return next_events

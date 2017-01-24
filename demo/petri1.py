@@ -107,14 +107,14 @@ class PetriNet(PetriNetBase):
 
     def EnabledTransitions(this):
         return filter(
-            lambda transition: transition.IsEnabled(this.labelling),
+            lambda transition: transition.is_enabled(this.labelling),
             this.transitions)
 
     def IsHalted(this):
         return len(this.EnabledTransitions()) == 0
 
     def FireOneRule(this):
-        this.SelectRandom(this.EnabledTransitions()).Fire(this.labelling)
+        this.SelectRandom(this.EnabledTransitions()).fire(this.labelling)
 
 
 # now build a Petri net for two opposite transitions:
