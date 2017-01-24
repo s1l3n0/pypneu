@@ -1,7 +1,7 @@
 # pypneu
 *Python libraries for Logic Programming Petri Nets (LPPN)*
 
-In contrast to `pneu`/`lppneu`, coded in `Groovy`/`Java` and relying on `lparse+smodels`, here we exploit the python module of clingo, an instance of the declarative bindings is maintained within the script, without requiring regrounding at each cycle.
+In contrast to `pneu`/`lppneu`, coded in `Groovy`/`Java` and relying on `lparse+smodels`, here we exploit the python module of `clingo`, an instance of the declarative bindings is maintained within the script, without requiring regrounding at each cycle.
 Performances are much better!
 
 ## Modules

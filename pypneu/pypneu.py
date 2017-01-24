@@ -7,7 +7,7 @@
 import logging
 from collections import deque
 
-logging.basicConfig(filename='pypneu.log', filemode='w', level=logging.INFO)
+logging.basicConfig(filename='../tmp/pypneu.log', filemode='w', level=logging.INFO)
 
 
 class Node:
@@ -241,7 +241,7 @@ class PetriNetAnalysis(PetriNetExecution):
         fireable_groups = []
         if new_state.events_to_state is None:
             for transition in self.transitions:
-                fireable_groups_per_transition = transition.pre_fireable_events()
+                fireable_groups_per_transition = transition.fireable_events()
                 if fireable_groups_per_transition is not None:
                     for group in fireable_groups_per_transition:
                         if group not in fireable_groups:

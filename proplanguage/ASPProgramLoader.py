@@ -6,7 +6,7 @@ from gen.ASPProgramLexer import ASPProgramLexer
 from gen.ASPProgramListener import ASPProgramListener
 from gen.ASPProgramParser import ASPProgramParser
 
-logging.basicConfig(filename='ASPProgramLoaderListener.log', filemode='w', level=logging.INFO)
+logging.basicConfig(filename='../tmp/ASPProgramLoaderListener.log', filemode='w', level=logging.INFO)
 
 
 class ASPProgramLoaderListener(ASPProgramListener):
