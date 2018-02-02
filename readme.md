@@ -4,6 +4,8 @@
 LPPN integrates procedural aspects specified by Petri Nets with declarative specified by Logic Programming (ASP). 
 In contrast to `lppneu`, coded in `Java` and calling the ASP solver `lparse+smodels`, `pypneu` exploits the python module of `clingo`; this means that an instance of the declarative bindings is maintained within the script, without requiring regrounding at each cycle. Performances are much better.
 
+current limitations: *only propositional logic*
+
 ## files
 
 - **pypneu**: basic Petri Nets (PN) interpreter (execution, analysis) 
