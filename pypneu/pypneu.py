@@ -118,9 +118,9 @@ class PetriNetStructure:
         dict = {}
         for node in nodes:
             nid = node.name
-            if dict.has_key(nid):
+            if nid in dict:
                 i = 1
-                while dict.has_key(nid):
+                while nid in dict:
                     i += 1
                     nid = node.name + "_" + str(i)
             dict[nid] = node
@@ -149,7 +149,7 @@ class PetriNetExecution(PetriNetStructure):
     def run_simulation(self, iterations):
         n = 0
         for i in range(iterations):
-            print self.marking_to_string()
+            print(self.marking_to_string())
             logging.info("attempting to run step " + str(i))
             if not self.run_execution_step():
                 break
@@ -157,7 +157,7 @@ class PetriNetExecution(PetriNetStructure):
                 n = n + 1
                 logging.info("step " + str(i) + " completed")
 
-        print str(n) + " steps completed."
+        print(str(n) + " steps completed.")
         return n
 
     def run_execution_step(self):
@@ -183,7 +183,7 @@ class PetriNetExecution(PetriNetStructure):
     def fire(self, fired_transitions_group):
         events = []
         for fired_transition in fired_transitions_group.set:
-            print fired_transition.name + " fires"
+            print(fired_transition.name + " fires")
             fired_transition.consume_input_tokens()
             events.append(fired_transition.produce_output_tokens())
         return events
@@ -200,16 +200,16 @@ class PetriNetAnalysis(PetriNetExecution):
 
     def status(self):
         # print "Summary: " + self.pathBase.toLog()
-        print "######################## "
+        print("######################## ")
         if self.path_base is not None:
-            print "paths: "
+            print("paths: ")
             for path in self.path_base:
-                print str(path)
+                print(str(path))
         if self.state_base is not None:
-            print "states: "
+            print("states: ")
             for state in self.state_base:
-                print str(state)
-        print "######################## "
+                print(str(state))
+        print("######################## ")
 
     def run_analysis(self, iterations):
         n = 0
@@ -222,7 +222,7 @@ class PetriNetAnalysis(PetriNetExecution):
                 n = n + 1
                 logging.info("step " + str(i) + " completed")
 
-        print str(n) + " steps completed."
+        print(str(n) + " steps completed.")
         self.status()
         return n
 

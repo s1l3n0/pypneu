@@ -183,9 +183,9 @@ class PetriNetStructure:
         dict = {}
         for node in nodes:
             nid = node.name
-            if dict.has_key(nid):
+            if nid in dict:
                 i = 1
-                while dict.has_key(nid):
+                while nid in dict:
                     i += 1
                     nid = node.name + "_" + str(i)
             dict[nid] = node
@@ -299,9 +299,9 @@ class PetriNetExecution(PetriNetStructure):
                 n = n + 1
                 # logging.info("step " + str(i) + " completed")
 
-        print self.marking_to_string()
+        print(self.marking_to_string())
 
-        print str(n) + " steps completed."
+        print(str(n) + " steps completed.")
         return n
 
     def run_execution_step(self):
@@ -387,16 +387,16 @@ class PetriNetAnalysis(PetriNetExecution):
 
     def status(self):
         # print "Summary: " + self.pathBase.toLog()
-        print "######################## "
+        print("######################## ")
         if self.path_base is not None:
-            print "paths: "
+            print("paths: ")
             for path in self.path_base:
-                print str(path)
+                print(str(path))
         if self.state_base is not None:
-            print "states: "
+            print("states: ")
             for state in self.state_base:
-                print str(state)
-        print "######################## "
+                print(str(state))
+        print("######################## ")
 
     def update_pid(self, model):
         for atom in model.symbols(shown=True):
@@ -455,7 +455,7 @@ class PetriNetAnalysis(PetriNetExecution):
         end = timer()
 
         timing = end - start
-        print str(len(self.path_base)) + " paths found (" + str(n) + " iterations) in " + str(timing) + " ms."
+        print(str(len(self.path_base)) + " paths found (" + str(n) + " iterations) in " + str(timing) + " ms.")
 
         # self.status()
         return len(self.path_base), timing, n
@@ -511,17 +511,17 @@ class PetriNetAnalysis(PetriNetExecution):
             place.marking = marking[place.nid]
 
     def trace_status(self, step):
-        print "########## "+ step +" ##############"
-        print "base path: "+str(self.base_path)
-        print "current path: "+str(self.current_path)
-        print "path base: " + ', '.join(map(str, self.path_base))
-        print "------------------------------------"
-        print "base state: "+str(self.base_state)
-        print "current state: "+str(self.current_state)
-        print "state base: " + ', '.join(map(str, self.state_base))
-        print "------------------------------------"
-        print "restarted: " + str(self.restarted)
-        print "####################################"
+        print("########## "+ step +" ##############")
+        print("base path: "+str(self.base_path))
+        print("current path: "+str(self.current_path))
+        print("path base: " + ', '.join(map(str, self.path_base)))
+        print("------------------------------------")
+        print("base state: "+str(self.base_state))
+        print("current state: "+str(self.current_state))
+        print("state base: " + ', '.join(map(str, self.state_base)))
+        print("------------------------------------")
+        print("restarted: " + str(self.restarted))
+        print("####################################")
 
     def run_analysis_step(self):
 

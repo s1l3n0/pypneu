@@ -244,6 +244,6 @@ someTransitionPrefiresAt(N) :-
         end = timer()
 
         timing = end - start
-        print str(self.n_models) + " answer sets found in " + str(timing) + " ms."
+        print(str(self.n_models) + " answer sets found in " + str(timing) + " ms.")
 
         return (self.n_models, timing)
