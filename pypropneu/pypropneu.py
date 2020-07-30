@@ -12,6 +12,7 @@ from timeit import default_timer as timer
 # logging.basicConfig(filename='pypropneu.log', filemode='w', level=# logging.INFO)
 
 
+
 class Node:
     # Fields
     # inputs : Arc list
@@ -26,7 +27,6 @@ class Node:
             return "Not attached to a net yet."
         else:
             return self.nid
-
 
 class ArcType:
     NORMAL = 1
@@ -455,7 +455,7 @@ class PetriNetAnalysis(PetriNetExecution):
         end = timer()
 
         timing = end - start
-        print(str(len(self.path_base)) + " paths found (" + str(n) + " iterations) in " + str(timing) + " ms.")
+        print(str(len(self.path_base)) + " paths found (" + str(n) + " iterations) in " + str(timing) + " s.")
 
         # self.status()
         return len(self.path_base), timing, n
@@ -624,12 +624,17 @@ class Path:
     def clone(self, n=None):
         new_path = Path()
         assert (len(self.steps) == len(self.events_per_steps) + 1) or (len(self.steps) == 0 and len(self.events_per_steps) == 0)
-        if n is None: n = len(self.steps)
+        if n is None:
+            n = len(self.steps)
         for i, step in enumerate(self.steps):
             if i <= n: new_path.steps.append(step)
         for i, events_per_step in enumerate(self.events_per_steps):
             if i <= n-1: new_path.events_per_steps.append(events_per_step)
         return new_path
+
+
+def get_ordering_key(node):
+    return node.nid
 
 
 class Group:
@@ -645,7 +650,7 @@ class Group:
 
     def __hash__(self):
         key = ""
-        for elem in sorted(self.set):
+        for elem in sorted(self.set, key=get_ordering_key):
             key += str(elem)
         return hash(key)
 

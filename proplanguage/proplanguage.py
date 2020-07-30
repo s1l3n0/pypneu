@@ -1,5 +1,4 @@
 import dependencygraph as dg
-# from gringo import Control, Model, Fun     ## for clingo 4.5.4
 from clingo import Control                   ## for clingo 5.1.0
 
 import ASPProgramLoader

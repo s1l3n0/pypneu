@@ -1,9 +1,3 @@
-#!/usr/bin/python
-# or:
-# !C:\Python27\python.exe
-
-# By Giovanni Sileno
-
 import logging
 from collections import deque
 

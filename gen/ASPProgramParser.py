@@ -1,85 +1,89 @@
-# Generated from /home/giovanni/PycharmProjects/pylppn/grammars/ASPProgram.g4 by ANTLR 4.6
+# Generated from /Users/giovanni/dev/pypneu/grammars/ASPProgram.g4 by ANTLR 4.8
 # encoding: utf-8
-from __future__ import print_function
 from antlr4 import *
 from io import StringIO
+import sys
+if sys.version_info[1] > 5:
+	from typing import TextIO
+else:
+	from typing.io import TextIO
+
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write(u"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3")
-        buf.write(u"\35\u00b9\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7")
-        buf.write(u"\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t")
-        buf.write(u"\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22")
-        buf.write(u"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3")
-        buf.write(u"\2\3\2\3\2\7\2\62\n\2\f\2\16\2\65\13\2\3\2\3\2\3\3\3")
-        buf.write(u"\3\3\3\3\3\3\3\3\3\5\3?\n\3\3\3\5\3B\n\3\3\4\3\4\5\4")
-        buf.write(u"F\n\4\3\5\3\5\5\5J\n\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3")
-        buf.write(u"\6\3\6\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\5\t_\n")
-        buf.write(u"\t\3\t\3\t\3\t\3\t\5\te\n\t\3\n\3\n\5\ni\n\n\3\13\3\13")
-        buf.write(u"\5\13m\n\13\3\f\3\f\3\f\5\fr\n\f\3\r\3\r\5\rv\n\r\3\r")
-        buf.write(u"\3\r\5\rz\n\r\3\16\3\16\3\16\3\16\5\16\u0080\n\16\3\16")
-        buf.write(u"\3\16\3\16\3\16\3\16\5\16\u0087\n\16\3\17\3\17\5\17\u008b")
-        buf.write(u"\n\17\3\17\3\17\3\17\5\17\u0090\n\17\3\20\5\20\u0093")
-        buf.write(u"\n\20\3\20\3\20\3\21\5\21\u0098\n\21\3\21\3\21\3\22\3")
-        buf.write(u"\22\3\22\3\22\3\22\5\22\u00a1\n\22\3\23\3\23\3\23\5\23")
-        buf.write(u"\u00a6\n\23\3\23\3\23\3\23\5\23\u00ab\n\23\3\23\3\23")
-        buf.write(u"\5\23\u00af\n\23\3\24\3\24\3\25\3\25\3\26\3\26\3\27\3")
-        buf.write(u"\27\3\27\2\2\30\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36")
-        buf.write(u" \"$&(*,\2\5\3\2\3\4\3\2\r\22\3\2\24\25\u00c1\2\63\3")
-        buf.write(u"\2\2\2\4A\3\2\2\2\6E\3\2\2\2\bI\3\2\2\2\nM\3\2\2\2\f")
-        buf.write(u"T\3\2\2\2\16Y\3\2\2\2\20^\3\2\2\2\22h\3\2\2\2\24l\3\2")
-        buf.write(u"\2\2\26n\3\2\2\2\30u\3\2\2\2\32\177\3\2\2\2\34\u008a")
-        buf.write(u"\3\2\2\2\36\u0092\3\2\2\2 \u0097\3\2\2\2\"\u009b\3\2")
-        buf.write(u"\2\2$\u00aa\3\2\2\2&\u00b0\3\2\2\2(\u00b2\3\2\2\2*\u00b4")
-        buf.write(u"\3\2\2\2,\u00b6\3\2\2\2.\62\5\4\3\2/\62\5\b\5\2\60\62")
-        buf.write(u"\5\6\4\2\61.\3\2\2\2\61/\3\2\2\2\61\60\3\2\2\2\62\65")
-        buf.write(u"\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\66\3\2\2\2\65")
-        buf.write(u"\63\3\2\2\2\66\67\7\2\2\3\67\3\3\2\2\289\7\27\2\29:\5")
-        buf.write(u"\26\f\2:;\7\7\2\2;B\3\2\2\2<>\t\2\2\2=?\5\26\f\2>=\3")
-        buf.write(u"\2\2\2>?\3\2\2\2?@\3\2\2\2@B\7\7\2\2A8\3\2\2\2A<\3\2")
-        buf.write(u"\2\2B\5\3\2\2\2CF\5\f\7\2DF\5\16\b\2EC\3\2\2\2ED\3\2")
-        buf.write(u"\2\2F\7\3\2\2\2GJ\5\22\n\2HJ\5\n\6\2IG\3\2\2\2IH\3\2")
-        buf.write(u"\2\2JK\3\2\2\2KL\7\7\2\2L\t\3\2\2\2MN\5(\25\2NO\7\t\2")
-        buf.write(u"\2OP\7\31\2\2PQ\7\30\2\2QR\7\31\2\2RS\7\n\2\2S\13\3\2")
-        buf.write(u"\2\2TU\5\22\n\2UV\7\6\2\2VW\5\24\13\2WX\7\7\2\2X\r\3")
-        buf.write(u"\2\2\2YZ\7\6\2\2Z[\5\24\13\2[\\\7\7\2\2\\\17\3\2\2\2")
-        buf.write(u"]_\7\31\2\2^]\3\2\2\2^_\3\2\2\2_`\3\2\2\2`a\7\13\2\2")
-        buf.write(u"ab\5\26\f\2bd\7\f\2\2ce\7\31\2\2dc\3\2\2\2de\3\2\2\2")
-        buf.write(u"e\21\3\2\2\2fi\5 \21\2gi\5\20\t\2hf\3\2\2\2hg\3\2\2\2")
-        buf.write(u"i\23\3\2\2\2jm\5\30\r\2km\5\20\t\2lj\3\2\2\2lk\3\2\2")
-        buf.write(u"\2m\25\3\2\2\2nq\5 \21\2op\7\b\2\2pr\5\26\f\2qo\3\2\2")
-        buf.write(u"\2qr\3\2\2\2r\27\3\2\2\2sv\5\36\20\2tv\5\32\16\2us\3")
-        buf.write(u"\2\2\2ut\3\2\2\2vy\3\2\2\2wx\7\b\2\2xz\5\30\r\2yw\3\2")
-        buf.write(u"\2\2yz\3\2\2\2z\31\3\2\2\2{\u0080\5(\25\2|\u0080\5,\27")
-        buf.write(u"\2}\u0080\7\31\2\2~\u0080\5\34\17\2\177{\3\2\2\2\177")
-        buf.write(u"|\3\2\2\2\177}\3\2\2\2\177~\3\2\2\2\u0080\u0081\3\2\2")
-        buf.write(u"\2\u0081\u0086\t\3\2\2\u0082\u0087\7\32\2\2\u0083\u0087")
-        buf.write(u"\7\33\2\2\u0084\u0087\7\31\2\2\u0085\u0087\5\34\17\2")
-        buf.write(u"\u0086\u0082\3\2\2\2\u0086\u0083\3\2\2\2\u0086\u0084")
-        buf.write(u"\3\2\2\2\u0086\u0085\3\2\2\2\u0087\33\3\2\2\2\u0088\u008b")
-        buf.write(u"\5,\27\2\u0089\u008b\7\31\2\2\u008a\u0088\3\2\2\2\u008a")
-        buf.write(u"\u0089\3\2\2\2\u008b\u008c\3\2\2\2\u008c\u008f\t\4\2")
-        buf.write(u"\2\u008d\u0090\5,\27\2\u008e\u0090\7\31\2\2\u008f\u008d")
-        buf.write(u"\3\2\2\2\u008f\u008e\3\2\2\2\u0090\35\3\2\2\2\u0091\u0093")
-        buf.write(u"\7\23\2\2\u0092\u0091\3\2\2\2\u0092\u0093\3\2\2\2\u0093")
-        buf.write(u"\u0094\3\2\2\2\u0094\u0095\5 \21\2\u0095\37\3\2\2\2\u0096")
-        buf.write(u"\u0098\7\25\2\2\u0097\u0096\3\2\2\2\u0097\u0098\3\2\2")
-        buf.write(u"\2\u0098\u0099\3\2\2\2\u0099\u009a\5\"\22\2\u009a!\3")
-        buf.write(u"\2\2\2\u009b\u00a0\5&\24\2\u009c\u009d\7\t\2\2\u009d")
-        buf.write(u"\u009e\5$\23\2\u009e\u009f\7\n\2\2\u009f\u00a1\3\2\2")
-        buf.write(u"\2\u00a0\u009c\3\2\2\2\u00a0\u00a1\3\2\2\2\u00a1#\3\2")
-        buf.write(u"\2\2\u00a2\u00ab\5(\25\2\u00a3\u00ab\5,\27\2\u00a4\u00a6")
-        buf.write(u"\7\25\2\2\u00a5\u00a4\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6")
-        buf.write(u"\u00a7\3\2\2\2\u00a7\u00ab\5*\26\2\u00a8\u00ab\5\"\22")
-        buf.write(u"\2\u00a9\u00ab\5\34\17\2\u00aa\u00a2\3\2\2\2\u00aa\u00a3")
-        buf.write(u"\3\2\2\2\u00aa\u00a5\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa")
-        buf.write(u"\u00a9\3\2\2\2\u00ab\u00ae\3\2\2\2\u00ac\u00ad\7\b\2")
-        buf.write(u"\2\u00ad\u00af\5$\23\2\u00ae\u00ac\3\2\2\2\u00ae\u00af")
-        buf.write(u"\3\2\2\2\u00af%\3\2\2\2\u00b0\u00b1\7\32\2\2\u00b1\'")
-        buf.write(u"\3\2\2\2\u00b2\u00b3\7\32\2\2\u00b3)\3\2\2\2\u00b4\u00b5")
-        buf.write(u"\7\31\2\2\u00b5+\3\2\2\2\u00b6\u00b7\7\33\2\2\u00b7-")
-        buf.write(u"\3\2\2\2\31\61\63>AEI^dhlquy\177\u0086\u008a\u008f\u0092")
-        buf.write(u"\u0097\u00a0\u00a5\u00aa\u00ae")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\35")
+        buf.write("\u00b9\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
+        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
+        buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\3\2\3\2\3\2\7")
+        buf.write("\2\62\n\2\f\2\16\2\65\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3")
+        buf.write("\3\3\5\3?\n\3\3\3\5\3B\n\3\3\4\3\4\5\4F\n\4\3\5\3\5\5")
+        buf.write("\5J\n\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3")
+        buf.write("\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\5\t_\n\t\3\t\3\t\3\t\3")
+        buf.write("\t\5\te\n\t\3\n\3\n\5\ni\n\n\3\13\3\13\5\13m\n\13\3\f")
+        buf.write("\3\f\3\f\5\fr\n\f\3\r\3\r\5\rv\n\r\3\r\3\r\5\rz\n\r\3")
+        buf.write("\16\3\16\3\16\3\16\5\16\u0080\n\16\3\16\3\16\3\16\3\16")
+        buf.write("\3\16\5\16\u0087\n\16\3\17\3\17\5\17\u008b\n\17\3\17\3")
+        buf.write("\17\3\17\5\17\u0090\n\17\3\20\5\20\u0093\n\20\3\20\3\20")
+        buf.write("\3\21\5\21\u0098\n\21\3\21\3\21\3\22\3\22\3\22\3\22\3")
+        buf.write("\22\5\22\u00a1\n\22\3\23\3\23\3\23\5\23\u00a6\n\23\3\23")
+        buf.write("\3\23\3\23\5\23\u00ab\n\23\3\23\3\23\5\23\u00af\n\23\3")
+        buf.write("\24\3\24\3\25\3\25\3\26\3\26\3\27\3\27\3\27\2\2\30\2\4")
+        buf.write("\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,\2\5\3\2\3")
+        buf.write("\4\3\2\r\22\3\2\24\25\2\u00c1\2\63\3\2\2\2\4A\3\2\2\2")
+        buf.write("\6E\3\2\2\2\bI\3\2\2\2\nM\3\2\2\2\fT\3\2\2\2\16Y\3\2\2")
+        buf.write("\2\20^\3\2\2\2\22h\3\2\2\2\24l\3\2\2\2\26n\3\2\2\2\30")
+        buf.write("u\3\2\2\2\32\177\3\2\2\2\34\u008a\3\2\2\2\36\u0092\3\2")
+        buf.write("\2\2 \u0097\3\2\2\2\"\u009b\3\2\2\2$\u00aa\3\2\2\2&\u00b0")
+        buf.write("\3\2\2\2(\u00b2\3\2\2\2*\u00b4\3\2\2\2,\u00b6\3\2\2\2")
+        buf.write(".\62\5\4\3\2/\62\5\b\5\2\60\62\5\6\4\2\61.\3\2\2\2\61")
+        buf.write("/\3\2\2\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63")
+        buf.write("\64\3\2\2\2\64\66\3\2\2\2\65\63\3\2\2\2\66\67\7\2\2\3")
+        buf.write("\67\3\3\2\2\289\7\27\2\29:\5\26\f\2:;\7\7\2\2;B\3\2\2")
+        buf.write("\2<>\t\2\2\2=?\5\26\f\2>=\3\2\2\2>?\3\2\2\2?@\3\2\2\2")
+        buf.write("@B\7\7\2\2A8\3\2\2\2A<\3\2\2\2B\5\3\2\2\2CF\5\f\7\2DF")
+        buf.write("\5\16\b\2EC\3\2\2\2ED\3\2\2\2F\7\3\2\2\2GJ\5\22\n\2HJ")
+        buf.write("\5\n\6\2IG\3\2\2\2IH\3\2\2\2JK\3\2\2\2KL\7\7\2\2L\t\3")
+        buf.write("\2\2\2MN\5(\25\2NO\7\t\2\2OP\7\31\2\2PQ\7\30\2\2QR\7\31")
+        buf.write("\2\2RS\7\n\2\2S\13\3\2\2\2TU\5\22\n\2UV\7\6\2\2VW\5\24")
+        buf.write("\13\2WX\7\7\2\2X\r\3\2\2\2YZ\7\6\2\2Z[\5\24\13\2[\\\7")
+        buf.write("\7\2\2\\\17\3\2\2\2]_\7\31\2\2^]\3\2\2\2^_\3\2\2\2_`\3")
+        buf.write("\2\2\2`a\7\13\2\2ab\5\26\f\2bd\7\f\2\2ce\7\31\2\2dc\3")
+        buf.write("\2\2\2de\3\2\2\2e\21\3\2\2\2fi\5 \21\2gi\5\20\t\2hf\3")
+        buf.write("\2\2\2hg\3\2\2\2i\23\3\2\2\2jm\5\30\r\2km\5\20\t\2lj\3")
+        buf.write("\2\2\2lk\3\2\2\2m\25\3\2\2\2nq\5 \21\2op\7\b\2\2pr\5\26")
+        buf.write("\f\2qo\3\2\2\2qr\3\2\2\2r\27\3\2\2\2sv\5\36\20\2tv\5\32")
+        buf.write("\16\2us\3\2\2\2ut\3\2\2\2vy\3\2\2\2wx\7\b\2\2xz\5\30\r")
+        buf.write("\2yw\3\2\2\2yz\3\2\2\2z\31\3\2\2\2{\u0080\5(\25\2|\u0080")
+        buf.write("\5,\27\2}\u0080\7\31\2\2~\u0080\5\34\17\2\177{\3\2\2\2")
+        buf.write("\177|\3\2\2\2\177}\3\2\2\2\177~\3\2\2\2\u0080\u0081\3")
+        buf.write("\2\2\2\u0081\u0086\t\3\2\2\u0082\u0087\7\32\2\2\u0083")
+        buf.write("\u0087\7\33\2\2\u0084\u0087\7\31\2\2\u0085\u0087\5\34")
+        buf.write("\17\2\u0086\u0082\3\2\2\2\u0086\u0083\3\2\2\2\u0086\u0084")
+        buf.write("\3\2\2\2\u0086\u0085\3\2\2\2\u0087\33\3\2\2\2\u0088\u008b")
+        buf.write("\5,\27\2\u0089\u008b\7\31\2\2\u008a\u0088\3\2\2\2\u008a")
+        buf.write("\u0089\3\2\2\2\u008b\u008c\3\2\2\2\u008c\u008f\t\4\2\2")
+        buf.write("\u008d\u0090\5,\27\2\u008e\u0090\7\31\2\2\u008f\u008d")
+        buf.write("\3\2\2\2\u008f\u008e\3\2\2\2\u0090\35\3\2\2\2\u0091\u0093")
+        buf.write("\7\23\2\2\u0092\u0091\3\2\2\2\u0092\u0093\3\2\2\2\u0093")
+        buf.write("\u0094\3\2\2\2\u0094\u0095\5 \21\2\u0095\37\3\2\2\2\u0096")
+        buf.write("\u0098\7\25\2\2\u0097\u0096\3\2\2\2\u0097\u0098\3\2\2")
+        buf.write("\2\u0098\u0099\3\2\2\2\u0099\u009a\5\"\22\2\u009a!\3\2")
+        buf.write("\2\2\u009b\u00a0\5&\24\2\u009c\u009d\7\t\2\2\u009d\u009e")
+        buf.write("\5$\23\2\u009e\u009f\7\n\2\2\u009f\u00a1\3\2\2\2\u00a0")
+        buf.write("\u009c\3\2\2\2\u00a0\u00a1\3\2\2\2\u00a1#\3\2\2\2\u00a2")
+        buf.write("\u00ab\5(\25\2\u00a3\u00ab\5,\27\2\u00a4\u00a6\7\25\2")
+        buf.write("\2\u00a5\u00a4\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6\u00a7")
+        buf.write("\3\2\2\2\u00a7\u00ab\5*\26\2\u00a8\u00ab\5\"\22\2\u00a9")
+        buf.write("\u00ab\5\34\17\2\u00aa\u00a2\3\2\2\2\u00aa\u00a3\3\2\2")
+        buf.write("\2\u00aa\u00a5\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa\u00a9")
+        buf.write("\3\2\2\2\u00ab\u00ae\3\2\2\2\u00ac\u00ad\7\b\2\2\u00ad")
+        buf.write("\u00af\5$\23\2\u00ae\u00ac\3\2\2\2\u00ae\u00af\3\2\2\2")
+        buf.write("\u00af%\3\2\2\2\u00b0\u00b1\7\32\2\2\u00b1\'\3\2\2\2\u00b2")
+        buf.write("\u00b3\7\32\2\2\u00b3)\3\2\2\2\u00b4\u00b5\7\31\2\2\u00b5")
+        buf.write("+\3\2\2\2\u00b6\u00b7\7\33\2\2\u00b7-\3\2\2\2\31\61\63")
+        buf.write(">AEI^dhlquy\177\u0086\u008a\u008f\u0092\u0097\u00a0\u00a5")
+        buf.write("\u00aa\u00ae")
         return buf.getvalue()
 
 
@@ -93,17 +97,16 @@ class ASPProgramParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ u"<INVALID>", u"'hide'", u"'show'", u"<INVALID>", u"':-'", 
-                     u"'.'", u"','", u"'('", u"')'", u"'{'", u"'}'", u"'='", 
-                     u"'!='", u"'>'", u"'<'", u"'>='", u"'<='", u"'not'", 
-                     u"'+'", u"'-'", u"'_'", u"'#domain'", u"'..'" ]
+    literalNames = [ "<INVALID>", "'hide'", "'show'", "<INVALID>", "':-'", 
+                     "'.'", "','", "'('", "')'", "'{'", "'}'", "'='", "'!='", 
+                     "'>'", "'<'", "'>='", "'<='", "'not'", "'+'", "'-'", 
+                     "'_'", "'#domain'", "'..'" ]
 
-    symbolicNames = [ u"<INVALID>", u"<INVALID>", u"<INVALID>", u"WS", u"ENTAILS", 
-                      u"DOT", u"COMMA", u"LPAR", u"RPAR", u"LACC", u"RACC", 
-                      u"EQ", u"NEQ", u"GT", u"LT", u"GE", u"LE", u"NOT", 
-                      u"PLUS", u"MINUS", u"UNDERSCORE", u"DOMAIN", u"RANGELEX", 
-                      u"INTEGER", u"IDENTIFIER", u"VARIABLE", u"SINGLE_LINE_COMMENT", 
-                      u"MULTILINE_COMMENT" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "WS", "ENTAILS", 
+                      "DOT", "COMMA", "LPAR", "RPAR", "LACC", "RACC", "EQ", 
+                      "NEQ", "GT", "LT", "GE", "LE", "NOT", "PLUS", "MINUS", 
+                      "UNDERSCORE", "DOMAIN", "RANGELEX", "INTEGER", "IDENTIFIER", 
+                      "VARIABLE", "SINGLE_LINE_COMMENT", "MULTILINE_COMMENT" ]
 
     RULE_program = 0
     RULE_directive = 1
@@ -128,12 +131,11 @@ class ASPProgramParser ( Parser ):
     RULE_constant = 20
     RULE_variable = 21
 
-    ruleNames =  [ u"program", u"directive", u"asprule", u"aspfact", u"rangedef", 
-                   u"normrule", u"constraint", u"choice", u"head", u"body", 
-                   u"list_literals", u"list_ext_literals_expressions", u"expression", 
-                   u"num_expression", u"ext_literal", u"literal", u"pos_literal", 
-                   u"list_parameters", u"predicate", u"identifier", u"constant", 
-                   u"variable" ]
+    ruleNames =  [ "program", "directive", "asprule", "aspfact", "rangedef", 
+                   "normrule", "constraint", "choice", "head", "body", "list_literals", 
+                   "list_ext_literals_expressions", "expression", "num_expression", 
+                   "ext_literal", "literal", "pos_literal", "list_parameters", 
+                   "predicate", "identifier", "constant", "variable" ]
 
     EOF = Token.EOF
     T__0=1
@@ -164,38 +166,39 @@ class ASPProgramParser ( Parser ):
     SINGLE_LINE_COMMENT=26
     MULTILINE_COMMENT=27
 
-    def __init__(self, input):
-        super(ASPProgramParser, self).__init__(input)
-        self.checkVersion("4.6")
+    def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
+        super().__init__(input, output)
+        self.checkVersion("4.8")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
 
 
+
     class ProgramContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.ProgramContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def EOF(self):
             return self.getToken(ASPProgramParser.EOF, 0)
 
-        def directive(self, i=None):
+        def directive(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(ASPProgramParser.DirectiveContext)
             else:
                 return self.getTypedRuleContext(ASPProgramParser.DirectiveContext,i)
 
 
-        def aspfact(self, i=None):
+        def aspfact(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(ASPProgramParser.AspfactContext)
             else:
                 return self.getTypedRuleContext(ASPProgramParser.AspfactContext,i)
 
 
-        def asprule(self, i=None):
+        def asprule(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(ASPProgramParser.AspruleContext)
             else:
@@ -205,13 +208,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_program
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterProgram"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterProgram" ):
                 listener.enterProgram(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitProgram"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -260,10 +269,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class DirectiveContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.DirectiveContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def DOMAIN(self):
@@ -279,13 +289,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_directive
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterDirective"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDirective" ):
                 listener.enterDirective(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitDirective"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDirective" ):
                 listener.exitDirective(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDirective" ):
+                return visitor.visitDirective(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -339,10 +355,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class AspruleContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.AspruleContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def normrule(self):
@@ -356,13 +373,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_asprule
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterAsprule"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAsprule" ):
                 listener.enterAsprule(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitAsprule"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAsprule" ):
                 listener.exitAsprule(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAsprule" ):
+                return visitor.visitAsprule(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -396,10 +419,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class AspfactContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.AspfactContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def DOT(self):
@@ -416,13 +440,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_aspfact
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterAspfact"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAspfact" ):
                 listener.enterAspfact(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitAspfact"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAspfact" ):
                 listener.exitAspfact(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAspfact" ):
+                return visitor.visitAspfact(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -457,10 +487,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class RangedefContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.RangedefContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
             self.rangemin = None # Token
             self.rangemax = None # Token
@@ -478,7 +509,7 @@ class ASPProgramParser ( Parser ):
         def RPAR(self):
             return self.getToken(ASPProgramParser.RPAR, 0)
 
-        def INTEGER(self, i=None):
+        def INTEGER(self, i:int=None):
             if i is None:
                 return self.getTokens(ASPProgramParser.INTEGER)
             else:
@@ -487,13 +518,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_rangedef
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterRangedef"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterRangedef" ):
                 listener.enterRangedef(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitRangedef"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitRangedef" ):
                 listener.exitRangedef(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRangedef" ):
+                return visitor.visitRangedef(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -524,10 +561,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class NormruleContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.NormruleContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def head(self):
@@ -547,13 +585,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_normrule
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterNormrule"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNormrule" ):
                 listener.enterNormrule(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitNormrule"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNormrule" ):
                 listener.exitNormrule(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNormrule" ):
+                return visitor.visitNormrule(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -580,10 +624,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ConstraintContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.ConstraintContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def ENTAILS(self):
@@ -599,13 +644,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_constraint
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterConstraint"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterConstraint" ):
                 listener.enterConstraint(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitConstraint"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitConstraint" ):
                 listener.exitConstraint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstraint" ):
+                return visitor.visitConstraint(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -630,10 +681,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ChoiceContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.ChoiceContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
             self.choicemin = None # Token
             self.choicemax = None # Token
@@ -648,7 +700,7 @@ class ASPProgramParser ( Parser ):
         def RACC(self):
             return self.getToken(ASPProgramParser.RACC, 0)
 
-        def INTEGER(self, i=None):
+        def INTEGER(self, i:int=None):
             if i is None:
                 return self.getTokens(ASPProgramParser.INTEGER)
             else:
@@ -657,13 +709,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_choice
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterChoice"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterChoice" ):
                 listener.enterChoice(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitChoice"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitChoice" ):
                 listener.exitChoice(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitChoice" ):
+                return visitor.visitChoice(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -705,10 +763,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class HeadContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.HeadContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
@@ -722,13 +781,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_head
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterHead"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterHead" ):
                 listener.enterHead(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitHead"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitHead" ):
                 listener.exitHead(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitHead" ):
+                return visitor.visitHead(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -762,10 +827,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class BodyContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.BodyContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def list_ext_literals_expressions(self):
@@ -779,13 +845,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_body
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterBody"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBody" ):
                 listener.enterBody(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitBody"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBody" ):
                 listener.exitBody(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBody" ):
+                return visitor.visitBody(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -819,10 +891,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class List_literalsContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.List_literalsContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
@@ -839,13 +912,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_list_literals
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterList_literals"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterList_literals" ):
                 listener.enterList_literals(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitList_literals"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitList_literals" ):
                 listener.exitList_literals(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitList_literals" ):
+                return visitor.visitList_literals(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -877,10 +956,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class List_ext_literals_expressionsContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.List_ext_literals_expressionsContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def ext_literal(self):
@@ -901,13 +981,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_list_ext_literals_expressions
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterList_ext_literals_expressions"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterList_ext_literals_expressions" ):
                 listener.enterList_ext_literals_expressions(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitList_ext_literals_expressions"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitList_ext_literals_expressions" ):
                 listener.exitList_ext_literals_expressions(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitList_ext_literals_expressions" ):
+                return visitor.visitList_ext_literals_expressions(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -951,10 +1037,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ExpressionContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.ExpressionContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def EQ(self):
@@ -983,13 +1070,13 @@ class ASPProgramParser ( Parser ):
             return self.getTypedRuleContext(ASPProgramParser.VariableContext,0)
 
 
-        def INTEGER(self, i=None):
+        def INTEGER(self, i:int=None):
             if i is None:
                 return self.getTokens(ASPProgramParser.INTEGER)
             else:
                 return self.getToken(ASPProgramParser.INTEGER, i)
 
-        def num_expression(self, i=None):
+        def num_expression(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(ASPProgramParser.Num_expressionContext)
             else:
@@ -1005,13 +1092,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_expression
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterExpression"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExpression" ):
                 listener.enterExpression(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitExpression"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1086,10 +1179,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Num_expressionContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.Num_expressionContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def PLUS(self):
@@ -1098,14 +1192,14 @@ class ASPProgramParser ( Parser ):
         def MINUS(self):
             return self.getToken(ASPProgramParser.MINUS, 0)
 
-        def variable(self, i=None):
+        def variable(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(ASPProgramParser.VariableContext)
             else:
                 return self.getTypedRuleContext(ASPProgramParser.VariableContext,i)
 
 
-        def INTEGER(self, i=None):
+        def INTEGER(self, i:int=None):
             if i is None:
                 return self.getTokens(ASPProgramParser.INTEGER)
             else:
@@ -1114,13 +1208,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_num_expression
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterNum_expression"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNum_expression" ):
                 listener.enterNum_expression(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitNum_expression"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNum_expression" ):
                 listener.exitNum_expression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNum_expression" ):
+                return visitor.visitNum_expression(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1175,10 +1275,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Ext_literalContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.Ext_literalContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def literal(self):
@@ -1191,13 +1292,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_ext_literal
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterExt_literal"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExt_literal" ):
                 listener.enterExt_literal(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitExt_literal"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExt_literal" ):
                 listener.exitExt_literal(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExt_literal" ):
+                return visitor.visitExt_literal(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1227,10 +1334,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class LiteralContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.LiteralContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def pos_literal(self):
@@ -1243,13 +1351,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_literal
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterLiteral"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLiteral" ):
                 listener.enterLiteral(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitLiteral"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLiteral" ):
                 listener.exitLiteral(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLiteral" ):
+                return visitor.visitLiteral(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1279,10 +1393,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class Pos_literalContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.Pos_literalContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def predicate(self):
@@ -1302,13 +1417,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_pos_literal
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterPos_literal"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPos_literal" ):
                 listener.enterPos_literal(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitPos_literal"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPos_literal" ):
                 listener.exitPos_literal(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPos_literal" ):
+                return visitor.visitPos_literal(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1342,10 +1463,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class List_parametersContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.List_parametersContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def identifier(self):
@@ -1381,13 +1503,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_list_parameters
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterList_parameters"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterList_parameters" ):
                 listener.enterList_parameters(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitList_parameters"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitList_parameters" ):
                 listener.exitList_parameters(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitList_parameters" ):
+                return visitor.visitList_parameters(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1454,10 +1582,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class PredicateContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.PredicateContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def IDENTIFIER(self):
@@ -1466,13 +1595,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_predicate
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterPredicate"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPredicate" ):
                 listener.enterPredicate(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitPredicate"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPredicate" ):
                 listener.exitPredicate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPredicate" ):
+                return visitor.visitPredicate(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1493,10 +1628,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class IdentifierContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.IdentifierContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def IDENTIFIER(self):
@@ -1505,13 +1641,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_identifier
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterIdentifier"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIdentifier" ):
                 listener.enterIdentifier(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitIdentifier"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIdentifier" ):
                 listener.exitIdentifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIdentifier" ):
+                return visitor.visitIdentifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1532,10 +1674,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class ConstantContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.ConstantContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def INTEGER(self):
@@ -1544,13 +1687,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_constant
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterConstant"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterConstant" ):
                 listener.enterConstant(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitConstant"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitConstant" ):
                 listener.exitConstant(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstant" ):
+                return visitor.visitConstant(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1571,10 +1720,11 @@ class ASPProgramParser ( Parser ):
             self.exitRule()
         return localctx
 
+
     class VariableContext(ParserRuleContext):
 
-        def __init__(self, parser, parent=None, invokingState=-1):
-            super(ASPProgramParser.VariableContext, self).__init__(parent, invokingState)
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
             self.parser = parser
 
         def VARIABLE(self):
@@ -1583,13 +1733,19 @@ class ASPProgramParser ( Parser ):
         def getRuleIndex(self):
             return ASPProgramParser.RULE_variable
 
-        def enterRule(self, listener):
-            if hasattr(listener, "enterVariable"):
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterVariable" ):
                 listener.enterVariable(self)
 
-        def exitRule(self, listener):
-            if hasattr(listener, "exitVariable"):
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitVariable" ):
                 listener.exitVariable(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVariable" ):
+                return visitor.visitVariable(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
