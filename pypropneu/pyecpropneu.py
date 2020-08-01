@@ -34,9 +34,8 @@ clipped(N1, F, P, N2) :-
 
 someTransitionPrefiresAt(N) :-
   prefiresAt(T, N), transition(T), time(N).
+:- not someTransitionPrefiresAt(N), enabled(T, N), transition(T), time(N).
 
-:- not someTransitionPrefiresAt(0).
-:- N > 0, not someTransitionPrefiresAt(N - 1), time(N).
 :- prefiresAt(T1, N), prefiresAt(T2, N), T1 != T2, transition(T1), transition(T2), time(N).
 """
     @staticmethod
@@ -184,7 +183,7 @@ someTransitionPrefiresAt(N) :-
             for place in inhibiting_places:
                 code += "not holdsAt(filled, "+place.nid+", N), "
 
-            code += "firesAt(" + transition.nid + ", N).\n"
+            code += "firesAt(" + transition.nid + ", N), enabled(" + transition.nid +", N).\n"
 
         elif binding.operator is BindingOperator.EQUIV:
             raise ValueError("Not yet implemented")
@@ -221,13 +220,18 @@ someTransitionPrefiresAt(N) :-
 
     def update_n_models(self, model):
         self.n_models += 1
+        # answer_set = []
+        # for atom in model.symbols(atoms="True"):
+        #    answer_set.append(str(atom))
+        # self.answer_sets.append(answer_set)
 
-    def solve(self, maxtime):
+    def solve(self, maxtime=10):
         self.n_models = 0
+        self.answer_sets = []
 
         code = self.build_event_calculus_program(maxtime)
 
-        out_file = open("../tmp/ec.lp", "w")
+        out_file = open("ec.lp", "w")
         out_file.write(code)
         out_file.close()
 

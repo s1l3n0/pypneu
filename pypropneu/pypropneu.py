@@ -9,7 +9,7 @@ from clingo import Control, Function, parse_program
 from collections import deque
 from timeit import default_timer as timer
 
-# logging.basicConfig(filename='pypropneu.log', filemode='w', level=# logging.INFO)
+logging.basicConfig(filename='pypropneu.log', filemode='w', level=logging.INFO)
 
 
 
@@ -27,6 +27,10 @@ class Node:
             return "Not attached to a net yet."
         else:
             return self.nid
+
+    def __repr__(self):
+        return self.__str__()
+
 
 class ArcType:
     NORMAL = 1
@@ -46,6 +50,15 @@ class Arc:
         self.type = type
         source.outputs.append(self)
         target.inputs.append(self)
+
+    def __str__(self):
+        if self.type == ArcType.NORMAL:
+            return "(%s -> %s)" % (str(self.source), str(self.target))
+        else:
+            raise RuntimeError("Not yet implemented")
+
+    def __repr__(self):
+        return self.__str__()
 
 
 class Place(Node):
@@ -239,6 +252,12 @@ class PetriNetStructure:
     def t_code(self):
         return self.t_interface_code() + self.t_bindings_code()
 
+    def __str__(self):
+        output = ""
+        output += "Places: %s" %(str(self.places)) + "\n"
+        output += "Transitions: %s" %(str(self.transitions)) + "\n"
+        output += "Arcs: %s" %(str(self.arcs)) + "\n"
+        return output
 
 class PetriNetExecution(PetriNetStructure):
 
@@ -260,7 +279,7 @@ class PetriNetExecution(PetriNetStructure):
     def init_control(self):
 
         p_code = self.p_code()
-        out_file = open("../tmp/p.lp", "w")
+        out_file = open("p.lp", "w")
         out_file.write(p_code)
         out_file.close()
 
@@ -273,7 +292,7 @@ class PetriNetExecution(PetriNetStructure):
         self.p_prog.ground([("base", [])])
 
         t_code = self.t_code()
-        out_file = open("../tmp/t.lp", "w")
+        out_file = open("t.lp", "w")
         out_file.write(t_code)
         out_file.close()
 
@@ -369,6 +388,8 @@ class PetriNetExecution(PetriNetStructure):
             events.append(fired_transition.produce_output_tokens())
         return events
 
+    def __str__(self):
+        return super().__str__()
 
 class PetriNetAnalysis(PetriNetExecution):
 
@@ -402,13 +423,16 @@ class PetriNetAnalysis(PetriNetExecution):
         for atom in model.symbols(shown=True):
             self.id2place[str(atom)].marking = True
         self.current_path = self.base_path.clone()
+        # logging.info("cloning path: "+str(self.current_path))
         self.current_state = self.save_consequent(self.base_state, self.last_events)
-        # logging.info("received new place model: "+str(self.current_state))
-        # record the starting path
+        # logging.info("received possible new state: "+str(self.current_state))
+        # record the path
         if self.current_state not in self.markings:
-            # logging.info("record the starting path...")
+            # logging.info("record the current state...")
             self.markings.append(self.current_state)
+            # logging.info("record the current path...")
             self.path_base.append(self.current_path)
+            # logging.info("path base: " + str(self.path_base))
 
     def update_tid(self, model):
         fireable_group = []
@@ -431,7 +455,7 @@ class PetriNetAnalysis(PetriNetExecution):
         self.fireable_groups = []
         self.t_prog.solve(on_model=self.update_tid)
 
-    def run_analysis(self, iterations = 2000, bug=False):
+    def run_analysis(self, iterations = 6000):
 
         self.init_control()
         self.path_base = deque()
@@ -441,7 +465,6 @@ class PetriNetAnalysis(PetriNetExecution):
         self.base_path = Path()
         self.base_state = None
         self.last_events = ()
-        self.bug = bug ## TODO: nasty bug in counting paths for forks.
 
         start = timer()
         n = 0
@@ -462,11 +485,13 @@ class PetriNetAnalysis(PetriNetExecution):
 
     # save the current marking, if it was not already saved before
     def save_state(self):
+        # logging.info("attempting to record state")
         marking = {}
         for place in self.places:
             marking[place.nid] = place.marking
         for state in self.state_base:
             if state.marking == marking:
+                # logging.info("state already recorded as "+str(state))
                 return state
 
         new_state = State(marking=marking, sid="s"+str(len(self.state_base)))
@@ -505,29 +530,30 @@ class PetriNetAnalysis(PetriNetExecution):
         return state
 
     def load_state(self, state):
-        # logging.info("recovering state "+str(state))
+        # logging.info("resuming state "+str(state))
         marking = state.marking
         for place in self.places:
             place.marking = marking[place.nid]
 
     def trace_status(self, step):
-        print("########## "+ step +" ##############")
-        print("base path: "+str(self.base_path))
-        print("current path: "+str(self.current_path))
-        print("path base: " + ', '.join(map(str, self.path_base)))
-        print("------------------------------------")
-        print("base state: "+str(self.base_state))
-        print("current state: "+str(self.current_state))
-        print("state base: " + ', '.join(map(str, self.state_base)))
-        print("------------------------------------")
-        print("restarted: " + str(self.restarted))
-        print("####################################")
+        return
+        # logging.info("########## "+ step +" ##############")
+        # logging.info("base path: "+str(self.base_path))
+        # logging.info("current path: "+str(self.current_path))
+        # logging.info("path base: " + ', '.join(map(str, self.path_base)))
+        # logging.info("------------------------------------")
+        # logging.info("base state: "+str(self.base_state))
+        # logging.info("current state: "+str(self.current_state))
+        # logging.info("state base: " + ', '.join(map(str, self.state_base)))
+        # logging.info("------------------------------------")
+        # logging.info("restarted: " + str(self.restarted))
+        # logging.info("####################################")
 
     def run_analysis_step(self):
 
         self.markings = []
 
-        # self.trace_status("1. before solving place bindings...")
+        self.trace_status("1. before solving place bindings...")
 
         # logging.info("resolution bindings on places")
         # logging.info("assign current marking")
@@ -539,13 +565,9 @@ class PetriNetAnalysis(PetriNetExecution):
         self.p_prog.solve(on_model=self.update_pid)
         # logging.info("completed solving.")
 
-        # self.trace_status("3. after solving place bindings...")
+        self.trace_status("2. after solving place bindings...")
 
         next_events = None
-
-        if self.bug is False:
-            if self.restarted is False:
-                self.path_base.remove(self.base_path)
 
         # the execution is complete if in the execution path we find the same state before the last one
         # if it is not complete, check for new events to fire
@@ -555,7 +577,7 @@ class PetriNetAnalysis(PetriNetExecution):
             ## consolidate the last computed state/path amongst all answer sets
             self.base_state = self.current_state
             self.base_path = self.current_path
-            # self.trace_status("4. after settled bases...")
+            self.trace_status("3. after settled bases...")
 
             next_events = self.current_state.find_next_events()
         # else:
@@ -565,11 +587,6 @@ class PetriNetAnalysis(PetriNetExecution):
         if next_events is None:
             # logging.info("backtracking...")
             self.restarted = False
-
-            # record this completed path
-            # # logging.info("record the completed path...")
-            # self.path_base.append(self.current_path)
-            # print "completed path: "+', '.join(map(str, self.path_base))
 
             # go backwards until you don't find some next event to be covered
             for i in range(len(self.current_path.steps) - 2, -1, -1):
@@ -584,10 +601,14 @@ class PetriNetAnalysis(PetriNetExecution):
                     self.current_state = step
                     self.current_path = self.current_path.clone(i)
                     self.load_state(step)
-                    self.path_base.remove(self.base_path)
+
+                    if self.current_path in self.path_base: # this is a node of junction, remove it
+                        # logging.info("remove junction node " + str(self.current_path))
+                        self.path_base.remove(self.current_path)
+
                     self.base_path = self.current_path
                     self.base_state = self.current_state
-                    # self.trace_status("5. after succesful backtracking...")
+                    self.trace_status("4. after successful backtracking...")
                     break
 
         if next_events is None:
@@ -595,16 +616,18 @@ class PetriNetAnalysis(PetriNetExecution):
             if self.restarted is True:
                 self.path_base.remove(self.base_path)
 
-            # self.trace_status("6. after unsuccesful backtracking...")
+            self.trace_status("5. after unsuccessful backtracking...")
 
             # logging.info("no new path to be covered.")
             return False
         else:
-            # self.trace_status("7. before firing...")
+            self.trace_status("7. before firing...")
             self.fire(next_events)
             self.last_events = next_events
             return True
 
+    def __str__(self):
+        return super().__str__()
 
 class Path:
 
@@ -620,6 +643,9 @@ class Path:
                output += " -- " + str(self.events_per_steps[i]) + " -- "
         return output
 
+    def __repr__(self):
+        return self.__str__()
+
     # shallow copy up to step n
     def clone(self, n=None):
         new_path = Path()
@@ -632,6 +658,19 @@ class Path:
             if i <= n-1: new_path.events_per_steps.append(events_per_step)
         return new_path
 
+    def __eq__(self, other):
+        if len(self.steps) != len(other.steps):
+            return False
+        if len(self.events_per_steps) != len(self.events_per_steps):
+            return False
+
+        for i in range(0, len(self.steps)):
+            if self.steps[i] != other.steps[i]:
+                return False
+            if (i < len(self.steps) - 1):
+               if self.events_per_steps[i] != other.events_per_steps[i]:
+                   return False
+        return True
 
 def get_ordering_key(node):
     return node.nid

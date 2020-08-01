@@ -14,6 +14,72 @@ class PyProPneuTestCase(unittest.TestCase):
         net = PetriNetExecution(places=[p1, p2], transitions=[t1], arcs=[a1, a2])
         assert net.run_simulation(5) == 1
 
+    def test_analysis_batch(self):
+        print("=============================")
+        p1 = Place("p1", True)
+        net = PetriNetAnalysis([p1], [], [])
+        print(net)
+        net.run_analysis()
+        print(net.path_base)
+        assert len(net.state_base) == 1
+        assert len(net.path_base) == 1
+
+        print("=============================")
+        t1 = Transition("t1")
+        p1 = Place("p1", True)
+        p2 = Place("p2", False)
+        a1 = Arc(p1, t1)
+        a2 = Arc(t1, p2)
+
+        net = PetriNetAnalysis([p1, p2], [t1], [a1, a2])
+        print(net)
+        net.run_analysis()
+        print(net.path_base)
+        assert len(net.state_base) == 2
+        assert len(net.path_base) == 2
+
+        print("=============================")
+        t1 = Transition("t1")
+        t2 = Transition("t2")
+        p1 = Place("p1", True)
+        p2 = Place("p2", False)
+        p3 = Place("p3", False)
+        a1 = Arc(p1, t1)
+        a2 = Arc(t1, p2)
+        a3 = Arc(p2, t2)
+        a4 = Arc(t2, p3)
+        net = PetriNetAnalysis([p1, p2, p3], [t1, t2], [a1, a2, a3, a4])
+        print(net)
+        net.run_analysis()
+        print(net.path_base)
+
+        assert len(net.state_base) == 3
+        assert len(net.path_base) == 3
+
+        print("=============================")
+        p1 = Place("p1", True)
+        net = PetriNetAnalysis([p1], [], [])
+        print(net)
+        net.run_analysis()
+        print(net.path_base)
+        assert len(net.state_base) == 1
+        assert len(net.path_base) == 1
+
+        print("=============================")
+        t1 = Transition("t1")
+        t2 = Transition("t2")
+        p1 = Place("p1", True)
+        a1 = Arc(p1, t1)
+        a2 = Arc(p1, t2)
+
+        net = PetriNetAnalysis([p1], [t1, t2], [a1, a2])
+        print(net)
+        net.run_analysis()
+        print(net.path_base)
+        assert len(net.state_base) == 2
+        assert len(net.path_base) == 3
+
+
     def test_analysis_1(self):
         p1 = Place("p1", True)
         p2 = Place("p2")
@@ -28,7 +94,7 @@ class PyProPneuTestCase(unittest.TestCase):
 
         net = PetriNetAnalysis(places=[p1, p2, p3], transitions=[t1, t2], arcs=[a1, a2, a3, a4])
         assert net.run_analysis()[2] == 2
-        assert len(net.path_base) == 1
+        assert len(net.path_base) == 3
 
     # simple Petri net with fork
     # one place, two transition
@@ -49,9 +115,9 @@ class PyProPneuTestCase(unittest.TestCase):
         a2 = Arc(p1, t2)
         net = PetriNetAnalysis([p1], [t1, t2], [a1, a2])
 
-        # assert net.run_analysis()[2] == 2
-        # assert len(net.state_base) == 2
-        # assert len(net.path_base) == 2
+        assert net.run_analysis()[2] == 2
+        assert len(net.state_base) == 2
+        assert len(net.path_base) == 3
 
     # simple Logic Programming Petri net
     # two places, a transition, a logic operator on places and one on transitions

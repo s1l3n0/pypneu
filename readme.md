@@ -1,10 +1,30 @@
 # pypneu
 *Python library for Logic Programming Petri Nets (LPPN)*
 
-LPPN integrates procedural aspects specified by Petri Nets with declarative specified by Logic Programming (ASP). 
-In contrast to `lppneu`, coded in `Java` and calling the ASP solver `lparse+smodels`, `pypneu` exploits the python module of `clingo`; this means that an instance of the declarative bindings is maintained within the script, without requiring regrounding at each cycle. Performances are much better.
+LPPN integrates procedural aspects specified by Petri Nets with declarative aspects relative to objects and events specified in Logic Programming (ASP). 
+`pypneu` exploits the python module of `clingo`; this means that an instance of the declarative bindings is maintained without requiring regrounding at each cycle, thus improving performances.
 
 current limitations: *only propositional logic*
+
+## usage
+
+Execution of a LPPN with hybrid operational semantics: brute force execution for the Petri Net, ASP solving for bindings on places and on transitions
+```
+net = PetriNetExecution(PetriNetStructure(places, transitions, arcs, p_bindings, t_bindings))
+iterations = net.run_simulation(nsteps)
+```
+
+Analysis of a LPPN with hybrid operational semantics: extends execution with backtracking for identifying all possible paths:
+```
+net = PetriNetAnalysis(places, transitions, arcs, p_bindings, t_bindings)
+(models, timing, iterations) = net.run_analysis(nsteps)
+```
+
+Analysis of a LPPN via denotational semantics: mapping the LPPN to a ASP program using event calculus (EC) and solving it:
+```
+netEC = PetriNetEventCalculus(places, transitions, arcs, p_bindings, t_bindings)
+(models, timing) = netEC.solve(nsteps)
+```
 
 ## files
 
